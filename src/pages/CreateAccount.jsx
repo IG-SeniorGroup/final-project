@@ -12,7 +12,7 @@ export default function CreateAccount() {
   
     });
       const {firstName, lastName, email, password} = formData;
-    const navigate = useNavigate()
+    
     function onChange(e){
       setFormData((prevState) => ({
         ...prevState,
@@ -41,7 +41,7 @@ export default function CreateAccount() {
                         {/* The right side of the page */}
 
                   <form >
-                    
+
                         {/* First name and last name created */}
 
                       <div className='flex space-x-2'>
