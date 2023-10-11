@@ -113,7 +113,7 @@ export default function Settings() {
             <Link  to= "/saved-questions">
 
                     <button
-                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-slate-300 transition duration-200 ease-in-out'>
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
                         <div className='border m-3 bg-slate-200 rounded-xl'>
                         <BsFillBookmarkFill className='text-2xl bg-slate-200 m-3' /> 
                         </div>
@@ -128,7 +128,7 @@ export default function Settings() {
             <Link  to= "/settings">
 
                     <button
-                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-slate-300 transition duration-200 ease-in-out'>
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
                         <div className='border m-3 bg-slate-200 rounded-3xl'>
                         <RiAccountCircleFill className='text-3xl bg-slate-200 m-3' /> 
                         </div>
@@ -143,7 +143,7 @@ export default function Settings() {
             <Link  to= "/questions" >
 
                     <button
-                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-slate-300 transition duration-200 ease-in-out'>
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
                         <div className='border m-3 bg-slate-200 rounded-3xl'>
                         <AiFillQuestionCircle className='text-3xl bg-slate-200 m-3' /> 
                         </div>
