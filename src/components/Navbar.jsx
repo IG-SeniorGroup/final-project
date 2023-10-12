@@ -10,7 +10,7 @@ export default function Navbar() {
     <div className='bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 '> 
         <header className = "flex justify-between items-center px-3 max-w-6xl mx-auto">
           <div>
-            <p  onClick={()=>navigate("/")}>Logo</p>
+            <h6 onClick={()=>navigate("/")} className='text-3xl font-semibold text-[#7CA0FB] cursor-pointer'>BrainLink</h6>
           </div>
           <div>
             <ul className='flex space-x-10'>
