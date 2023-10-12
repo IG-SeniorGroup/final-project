@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 
 export default function CreateAccount() {
@@ -12,7 +12,7 @@ export default function CreateAccount() {
   
     });
       const {firstName, lastName, email, password} = formData;
-    const navigate = useNavigate()
+    
     function onChange(e){
       setFormData((prevState) => ({
         ...prevState,
@@ -41,7 +41,7 @@ export default function CreateAccount() {
                         {/* The right side of the page */}
 
                   <form >
-                    
+
                         {/* First name and last name created */}
 
                       <div className='flex space-x-2'>
