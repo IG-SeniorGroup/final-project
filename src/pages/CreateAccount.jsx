@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { auth, firestore } from './firebase';
 
 export default function CreateAccount() {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
       firstName: "",
@@ -19,6 +23,28 @@ export default function CreateAccount() {
         [e.target.id]: e.target.value,
       }))
     }
+    
+    async function handleRegistration(e) {
+  
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+    
+          // Store user information in Firestore
+          await addDoc(collection(firestore, 'users'), {
+            firstName,
+            lastName,
+            email,
+            userId: user.uid, 
+          });
+    
+          console.log('User registration successful!');
+          // Redirect the user 
+          navigate('/');
+        } catch (error) {
+          console.error('Error registering user:', error);
+        }
+      }
     return (
       <div>
           <div className=''>
@@ -40,7 +66,7 @@ export default function CreateAccount() {
 
                         {/* The right side of the page */}
 
-                  <form >
+                  <form onSubmit={handleRegistration}>
 
                         {/* First name and last name created */}
 
@@ -72,7 +98,7 @@ export default function CreateAccount() {
                       </div>
                             {/* The submit button */}
 
-                      <button className= "w-full bg-[#7CA0FB] text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-500 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-600" type = "submit">Sign in</button>
+                      <button className= "w-full bg-[#7CA0FB] text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-500 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-600" type = "submit">Sign up</button>
 
 
 
