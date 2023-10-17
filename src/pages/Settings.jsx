@@ -34,6 +34,7 @@ export default function Settings() {
                         id = "firstName"
                         value={firstName}
                         onChange={onChange}
+                        disabled={!change}
                         className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
 
                     <p className='font-semibold'>Last name</p>
@@ -42,6 +43,7 @@ export default function Settings() {
                         id = "lastName"
                         value={lastName}
                         onChange={onChange}
+                        disabled={!change}
                         className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
 
 
@@ -51,6 +53,7 @@ export default function Settings() {
                         id = "email"
                         value={email}
                         onChange={onChange}
+                        disabled={!change}
                         className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
 
                     <p className='font-semibold'>Description</p>
@@ -59,6 +62,7 @@ export default function Settings() {
                         id = "description"
                         value = {description}
                         onChange={onChange}
+                        disabled={!change}
                         className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out'/>
 
                     <div className='flex space-x-5'>
@@ -70,6 +74,7 @@ export default function Settings() {
                                 id = "gitHub"
                                 value={gitHub}
                                 onChange={onChange}
+                                disabled={!change}
                                 className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
                         </div>
                         <div className='w-full'>
@@ -80,6 +85,7 @@ export default function Settings() {
                                 id = "linkedin"
                                 value={linkedin}
                                 onChange={onChange}
+                                disabled={!change}
                                 className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
                         </div>
 
