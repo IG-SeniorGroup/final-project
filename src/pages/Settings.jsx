@@ -8,7 +8,7 @@ import { getAuth } from 'firebase/auth';
 
 export default function Settings() {
     const auth = getAuth()
-    const navigate = useNavigate()
+  const navigate = useNavigate()
     const [change, setChange] = useState(false)
     const [formData, setFormData] = useState({
         firstName: "",
