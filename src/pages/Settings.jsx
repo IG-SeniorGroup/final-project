@@ -4,7 +4,10 @@ import {BsFillBookmarkFill} from "react-icons/bs"
 import {RiAccountCircleFill} from "react-icons/ri"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import { firestore, collection, doc, setDoc } from './firebase';
+<<<<<<< HEAD
 import { getAuth } from 'firebase/auth';
+=======
+>>>>>>> f0c497d75f345b2943884e6e58fb2adde9310984
 
 export default function Settings() {
     const auth = getAuth()
@@ -38,10 +41,14 @@ export default function Settings() {
           console.error('Error updating user information:', error);
         }
       };
+<<<<<<< HEAD
       function onLogout(){
         auth.signOut()
         navigate("/")
       }
+=======
+
+>>>>>>> f0c497d75f345b2943884e6e58fb2adde9310984
     function onChange(e){
         setFormData((prevState) => ({
           ...prevState,
