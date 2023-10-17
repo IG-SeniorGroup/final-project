@@ -1,11 +1,26 @@
+import {useEffect, useState} from 'react'
 
-
-import { useNavigate } from 'react-router';
-
+import { useLocation, useNavigate } from 'react-router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 export default function Navbar() {
-    
-    const navigate = useNavigate();  
-    
+  const [pageState, setPageState] = useState("Sign in")
+  const auth= getAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() =>{
+    onAuthStateChanged(auth, (user) =>{
+      if(user){
+        setPageState('Settings')
+      }else{
+        setPageState("Login")
+      }
+    })
+  })
+  function pathMatchRoute(route){
+      if(route === location.pathname){
+        return true
+      }
+  };
   return (
     <div className='bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 '> 
         <header className = "flex justify-between items-center px-3 max-w-6xl mx-auto">
@@ -19,9 +34,9 @@ export default function Navbar() {
         </div>
           <div>
             <ul className='flex space-x-10'>
-              <li className={`cursor-pointer py-3 text-sm font-semibold  border-b-[3px] border-b-transparent`}onClick={()=>navigate("/")}>Home</li>
-              <li className={`cursor-pointer py-3 text-sm font-semibold  border-b-[3px] border-b-transparent `}onClick={()=>navigate("/explore")}>Explore</li>
-              <li className={`cursor-pointer py-3 text-sm font-semibold border-b-[3px] border-b-transparent }`}onClick={()=>navigate("/login")}>Login</li>
+            <li className={`cursor-pointer py-3 text-sm font-semibold  border-b-[3px] border-b-transparent ${pathMatchRoute("/") && " !border-b-[#7CA0FB]"}`}onClick={()=>navigate("/")}>Home</li>
+              <li className={`cursor-pointer py-3 text-sm font-semibold  border-b-[3px] border-b-transparent ${pathMatchRoute("/explore") && " !border-b-[#7CA0FB]"}`}onClick={()=>navigate("/explore")}>Explore</li>
+              <li className={`cursor-pointer py-3 text-sm font-semibold border-b-[3px] border-b-transparent ${(pathMatchRoute("/login") || pathMatchRoute("/settings") )&& " !border-b-[#7CA0FB]"}`}onClick={()=>navigate("/settings")}>{pageState}</li>
               
             </ul>
           </div>

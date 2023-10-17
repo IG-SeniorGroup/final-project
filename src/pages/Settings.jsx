@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {BsFillBookmarkFill} from "react-icons/bs"
 import {RiAccountCircleFill} from "react-icons/ri"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import { firestore, collection, doc, setDoc } from './firebase';
+import { getAuth } from 'firebase/auth';
 
 export default function Settings() {
+    const auth = getAuth()
+  const navigate = useNavigate()
     const [change, setChange] = useState(false)
     const [formData, setFormData] = useState({
         firstName: "",
@@ -35,7 +38,10 @@ export default function Settings() {
           console.error('Error updating user information:', error);
         }
       };
-
+      function onLogout(){
+        auth.signOut()
+        navigate("/")
+      }
     function onChange(e){
         setFormData((prevState) => ({
           ...prevState,
@@ -145,7 +151,7 @@ export default function Settings() {
                         
 
                     </div>
-                    <p className='text-center text-xl text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out cursor-pointer'>
+                    <p onClick = {onLogout} className='text-center text-xl text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out cursor-pointer'>
                             Sign out
                         </p>
 
