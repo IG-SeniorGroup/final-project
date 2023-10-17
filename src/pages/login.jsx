@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase'; // Import 'auth' from your 'firebase.js'
 
@@ -99,6 +99,14 @@ export default function Login() {
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
+              <p className='mt-6 text-center text-blue-600 hover:text-blue-700 transition duration-150 ease-in-out'>
+                            <Link to = "/forgot-password" className=''>Forgot Password</Link>
+                        </p>
+                        <div></div> 
+                            <p className='font-semibold '>Don't have an account?</p>
+                            <p className='text-center text-blue-600 hover:text-blue-700 transition duration-150 ease-in-out'>
+                            <Link to = "/create-account" className=''>Sign up</Link>
+                            </p>
             </form>
           </div>
         </div>
