@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 
 import CreateAccount from "./pages/CreateAccount";
 import Settings from "./pages/Settings";
+import Login from "./pages/login";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path ="/settings"  element = {<Settings />} />
+          <Route path ="/login" element = {<Login />} />
         </Routes>
 
       </Router>
