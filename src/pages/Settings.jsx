@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import {BsFillBookmarkFill} from "react-icons/bs"
 import {RiAccountCircleFill} from "react-icons/ri"
 import {AiFillQuestionCircle} from "react-icons/ai"
+import { firestore, collection, doc, setDoc } from './firebase';
+
 export default function Settings() {
     const [change, setChange] = useState(false)
     const [formData, setFormData] = useState({
@@ -14,14 +16,39 @@ export default function Settings() {
         linkedin: "",
     })
     const {firstName, lastName, email, description, gitHub, linkedin} = formData;
+
+    const updateUserInformation = async () => {
+        const userDocRef = doc(collection(firestore, 'users'), 'user-id-here'); //HERE WE GOTTA USE A USER ID TO TEST
+        const userData = {
+          firstName,
+          lastName,
+          email,
+          description,
+          gitHub,
+          linkedin,
+        };
+    
+        try {
+          await setDoc(userDocRef, userData, { merge: true });
+          console.log('User information updated successfully.');
+        } catch (error) {
+          console.error('Error updating user information:', error);
+        }
+      };
+
     function onChange(e){
         setFormData((prevState) => ({
           ...prevState,
           [e.target.id]: e.target.value,
         }))
       }
+      const handleFormSubmit = (e) => {
+        e.preventDefault();
+        updateUserInformation(); // Call the function to update user information in Firestore
+      };
   return (
     <div className='w-full'>
+        <form onSubmit={handleFormSubmit}></form>
         <section className='p-5 max-w-6xl mx-auto flex justify-center items-center flex-col'>
 
             <h1 className='text-center text-3xl font-bold'>Account settings</h1>
@@ -34,7 +61,8 @@ export default function Settings() {
                         id = "firstName"
                         value={firstName}
                         onChange={onChange}
-                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
+                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' 
+                        readOnly={!change}/>
 
                     <p className='font-semibold'>Last name</p>
                     <input 
@@ -42,7 +70,8 @@ export default function Settings() {
                         id = "lastName"
                         value={lastName}
                         onChange={onChange}
-                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
+                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' 
+                        readOnly={!change}/>
 
 
                     <p className='font-semibold'>Email</p>
@@ -51,7 +80,8 @@ export default function Settings() {
                         id = "email"
                         value={email}
                         onChange={onChange}
-                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
+                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' 
+                        readOnly={!change}/>
 
                     <p className='font-semibold'>Description</p>
                     <textarea 
@@ -59,7 +89,8 @@ export default function Settings() {
                         id = "description"
                         value = {description}
                         onChange={onChange}
-                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out'/>
+                        className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out'
+                        readOnly={!change}/>
 
                     <div className='flex space-x-5'>
                         <div className='w-full'>
@@ -70,7 +101,8 @@ export default function Settings() {
                                 id = "gitHub"
                                 value={gitHub}
                                 onChange={onChange}
-                                className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
+                                className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' 
+                                readOnly={!change}/>
                         </div>
                         <div className='w-full'>
 
@@ -80,7 +112,8 @@ export default function Settings() {
                                 id = "linkedin"
                                 value={linkedin}
                                 onChange={onChange}
-                                className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' />
+                                className='mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out' 
+                                readOnly={!change}/>
                         </div>
 
                     </div>
