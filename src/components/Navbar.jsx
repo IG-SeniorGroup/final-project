@@ -9,9 +9,14 @@ export default function Navbar() {
   return (
     <div className='bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 '> 
         <header className = "flex justify-between items-center px-3 max-w-6xl mx-auto">
-          <div>
-            <h6 onClick={()=>navigate("/")} className='text-3xl font-semibold text-[#7CA0FB] cursor-pointer'>BrainLink</h6>
-          </div>
+        <div style={{ paddingTop: '10px', paddingBottom: '10px' }}> 
+          <img
+            src="/logo.svg" 
+            alt="Logo"
+            style={{ height: '40px', width: 'auto' }}
+            onClick={() => navigate("/")}
+          />
+        </div>
           <div>
             <ul className='flex space-x-10'>
               <li className={`cursor-pointer py-3 text-sm font-semibold  border-b-[3px] border-b-transparent`}onClick={()=>navigate("/")}>Home</li>
