@@ -105,7 +105,7 @@ export default function CreateAccount() {
                       <div className='mt-2 flex justify-center space-x-2'>
                           <p className='font-semibold'>Already have an account?</p>
                           <p>
-                              <Link to = "/" className='text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out mr-2'>Sign in</Link>
+                              <Link to = "/login" className='text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out mr-2'>Sign in</Link>
                           </p>
                       </div>
                   
