@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, setDoc,doc } from "firebase/firestore";
 import { auth, firestore } from "./firebase";
 
 export default function CreateAccount() {
@@ -36,7 +36,7 @@ export default function CreateAccount() {
       const user = userCredential.user;
 
       // Store user information in Firestore
-      await addDoc(collection(firestore, "users"), {
+      await setDoc(doc(collection(firestore, 'users'), auth.currentUser.uid), {
         firstName,
         lastName,
         email,
