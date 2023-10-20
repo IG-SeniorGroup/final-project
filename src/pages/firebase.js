@@ -28,5 +28,4 @@ const firestore = getFirestore(app); // Initialize the Firestore object with the
 // Export the initialized Firebase services
 export { auth, firestore, doc, setDoc, getDoc, collection };
 
-export { auth, firestore, doc, collection, setDoc};
 
