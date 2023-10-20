@@ -159,6 +159,7 @@ export default function Settings() {
                 />
               </div>
             </div>
+
             <div className="flex  whitespace-nowrap text-sm sm:text-lg space-x-3">
               <p>Do you want to make changes?</p>
               <span
@@ -172,6 +173,57 @@ export default function Settings() {
               >
                 {change ? "Apply change" : "Edit"}
               </span>
+
+        </section>
+        <div className='flex items-center justify-center'>
+            <div className='sm:grid sm:grid-cols-2 lg:grid-cols-3'>
+                
+            <Link  to= "/saved-questions">
+
+                    <button
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
+                        <div className='border m-3 bg-slate-200 rounded-xl'>
+                        <BsFillBookmarkFill className='text-2xl bg-slate-200 m-3' /> 
+                        </div>
+
+                        <div >
+
+                            <p className='font-semibold text-start'>Saved</p>
+                            <p className='text-slate-600'>View saved questions</p>
+                        </div>
+                    </button>
+            </Link>
+            <Link  to= "/settings">
+
+                    <button
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
+                        <div className='border m-3 bg-slate-200 rounded-3xl'>
+                        <RiAccountCircleFill className='text-3xl bg-slate-200 m-3' /> 
+                        </div>
+
+                        <div >
+
+                        <p className='font-semibold text-start'>Account</p>
+                            <p className='text-slate-600'>View your profile</p>
+                        </div>
+                    </button>
+            </Link>
+            <Link  to= "/post-question" >
+
+                    <button
+                    className='flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5'>
+                        <div className='border m-3 bg-slate-200 rounded-3xl'>
+                        <AiFillQuestionCircle className='text-3xl bg-slate-200 m-3' /> 
+                        </div>
+
+                        <div >
+
+                        <p className='font-semibold text-start'>Questions</p>
+                            <p className='text-slate-600'>Post a question</p>
+                        </div>
+                    </button>
+            </Link>
+
             </div>
             <p
               onClick={onLogout}
