@@ -15,3 +15,5 @@ export default function useAuthStatus() {
     },[])
   return {loggedIn, checkingStatus}
 }
+
+//adding comments for this to push
