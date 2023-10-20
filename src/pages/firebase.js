@@ -11,11 +11,11 @@ import { getFirestore, doc, setDoc, getDoc, collection } from 'firebase/firestor
 const firebaseConfig = {
   apiKey: "AIzaSyCvxulm_EAdMCKH51BYjgwP9WDoCYIVRyA",
   authDomain: "fall-2023-senior-project.firebaseapp.com",
+  databaseURL: "https://fall-2023-senior-project-default-rtdb.firebaseio.com",
   projectId: "fall-2023-senior-project",
   storageBucket: "fall-2023-senior-project.appspot.com",
   messagingSenderId: "329470444938",
-  appId: "1:329470444938:web:b2d5f3cffc2f3e2880f473",
-  measurementId: "G-2BKPRVYVCW"
+  appId: "1:329470444938:web:b2d5f3cffc2f3e2880f473"
 };
 
 // Initialize Firebase
