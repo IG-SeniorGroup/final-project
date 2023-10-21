@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import { firestore } from './firebase';
-import { collection, addDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 export default function PostQuestion() {
@@ -30,43 +27,6 @@ export default function PostQuestion() {
         }
 
     }
-    // function for the image
-    async function uploadImages(imageFiles) {
-        const imageUrls = [];
-         for (const imageFile of imageFiles) {
-            const storage = getStorage();
-            const imageRef = ref(storage, 'images/' + imageFile.name);
-            // Upload image to Firebase Storage
-            await uploadBytes(imageRef, imageFile);
-            // Get the download URL
-            const imageUrl = await getDownloadURL(imageRef);
-            imageUrls.push(imageUrl);
-    }
-
-    return imageUrls;
-  }
-  async function handlePosting(e) {
-    e.preventDefault();
-    try {
-      // Upload images and get their URLs
-      const imageUrls = await uploadImages(images);
-
-      // Create a new post in Firestore with image URLs
-      const docRef = await addDoc(collection(firestore, 'posts'), {
-        question,
-        subject,
-        course,
-        images: imageUrls, // This should be an array of image URLs
-      });
-
-      console.log('Question posted successfully:', docRef.id);
-    } catch (error) {
-      console.error('Error posting question:', error);
-    }
-  }
-
-
-//
    
 
 
@@ -74,7 +34,7 @@ export default function PostQuestion() {
     <div>
         <main className='max-w-md px-2 mx-auto'>
             <h1 className='text-center mt-6 font-bold text-3xl'>Post a new question</h1>
-            <form onSubmit={handlePosting}>
+            <form>
                 <p className='mt-10 font-semibold text-lg'>Ask your question</p>
                 <textarea
                     type = "text"
