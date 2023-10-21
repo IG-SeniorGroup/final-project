@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { firestore } from './firebase';
-import { collection, addDoc } from 'firebase/firestore';
+
 
 export default function PostQuestion() {
     const [formData, setFormData] = useState({
@@ -28,25 +27,14 @@ export default function PostQuestion() {
         }
 
     }
-    async function handlePosting(e){
-    try{
-        await addDoc(collection(firestore, 'posts'), {
-            question,
-            subject,
-            course,
-            images,
-        });
-    } catch (error) {
-        console.error('Error:', error);
-      }
-}
+   
 
 
   return (
     <div>
         <main className='max-w-md px-2 mx-auto'>
             <h1 className='text-center mt-6 font-bold text-3xl'>Post a new question</h1>
-            <form onSubmit={handlePosting}>
+            <form>
                 <p className='mt-10 font-semibold text-lg'>Ask your question</p>
                 <textarea
                     type = "text"
