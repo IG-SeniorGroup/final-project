@@ -208,7 +208,7 @@ export default function Settings() {
               </div>
             </button>
           </Link>
-          <Link to="/questions">
+          <Link to="/post-question">
             <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
