@@ -31,7 +31,6 @@ export default function PostQuestion() {
         }
 
     }
-    // function for the image
     async function uploadImages(imageFiles) {
         const imageUrls = [];
          for (const imageFile of imageFiles) {
@@ -61,7 +60,9 @@ export default function PostQuestion() {
       });
 
       console.log('Question posted successfully:', docRef.id);
+
       navigate("/");
+
     } catch (error) {
       console.error('Error posting question:', error);
     }
