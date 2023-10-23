@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { firestore } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
-
+import { useNavigate } from 'react-router-dom';
 
 export default function PostQuestion() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         question: "",
         subject: "",
@@ -61,6 +61,7 @@ export default function PostQuestion() {
       });
 
       console.log('Question posted successfully:', docRef.id);
+      navigate("/");
     } catch (error) {
       console.error('Error posting question:', error);
     }
