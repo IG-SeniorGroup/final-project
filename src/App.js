@@ -1,7 +1,8 @@
+//importing all files for connections
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import Navbar from './components/Navbar';
-import PostQuestion from "./pages/PostQuestion";
+
 import CreateAccount from "./pages/CreateAccount";
 import Settings from "./pages/Settings";
 import Login from "./pages/login";
@@ -16,6 +17,9 @@ function App() {
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path = "/settings" element = {<PrivateRoute /> }>
             <Route path ="/settings"  element = {<Settings />} />
+            </Route>
+            <Route path = "/post-question" element = {<PrivateRoute /> }>
+            <Route path = "/post-question" element = {<PostQuestion />} />
           </Route>
           <Route path = "/post-question" element = {<PrivateRoute /> }>
             <Route path ="/post-question"  element = {<PostQuestion />} />
