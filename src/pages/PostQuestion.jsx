@@ -31,8 +31,44 @@ export default function PostQuestion() {
         }
 
     }
+    // function for the image
+    async function uploadImages(imageFiles) {
+        const imageUrls = [];
+         for (const imageFile of imageFiles) {
+            const storage = getStorage();
+            const imageRef = ref(storage, 'images/' + imageFile.name);
+            // Upload image to Firebase Storage
+            await uploadBytes(imageRef, imageFile);
+            // Get the download URL
+            const imageUrl = await getDownloadURL(imageRef);
+            imageUrls.push(imageUrl);
+    }
+
+    return imageUrls;
+  }
+  async function handlePosting(e) {
+    e.preventDefault();
+    try {
+      // Upload images and get their URLs
+      const imageUrls = await uploadImages(images);
+
+      // Create a new post in Firestore with image URLs
+      const docRef = await addDoc(collection(firestore, 'posts'), {
+        question,
+        subject,
+        course,
+        images: imageUrls, // This should be an array of image URLs
+      });
+
+      console.log('Question posted successfully:', docRef.id);
+      navigate("/");
+    } catch (error) {
+      console.error('Error posting question:', error);
+    }
+  }
 
 
+//
   return (
     <div>
         <main className='max-w-md px-2 mx-auto'>
