@@ -5,9 +5,11 @@ import {RiAccountCircleFill} from "react-icons/ri"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import { firestore, collection, doc, setDoc } from './firebase';
 import { getAuth } from 'firebase/auth';
-import { getDoc } from 'firebase/firestore';
+import { getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
+import QuestionCard from '../components/QuestionCard';
 
 export default function Settings() {
+    const [postings, setPostings] = useState(false);
     const auth = getAuth()
     
   useEffect(() => {
@@ -33,6 +35,25 @@ export default function Settings() {
         });
     }
   }, []);
+
+  useEffect(() => {
+    async function fetchUserPostings(){
+        const postingsRef = collection(firestore, "posts");
+        const q = query(postingsRef, where("userRef", "==", auth.currentUser.uid), orderBy("timestamp", "desc"))
+        const querySnap  = await getDocs(q)
+        let postings = [];
+        querySnap.forEach((doc) => {
+            return postings.push({
+                id: doc.id,
+                data: doc.data()
+            })
+        })
+        setPostings(postings)
+
+    }
+    fetchUserPostings()
+
+},[])
   
   const navigate = useNavigate()
     const [change, setChange] = useState(false)
@@ -222,6 +243,26 @@ export default function Settings() {
           </Link>
         </div>
       </div>
+      
+      {postings.length > 0 && (
+            <>
+            <h6 className='text-2xl text-rose-400 text-center font-semibold '>Questions</h6>
+            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3  '>
+                {postings.map((posting) =>(
+                    <QuestionCard
+                    key = {posting.id}
+                    id = {posting.id}
+                    posting = {posting.data}
+                    
+                    
+                    />
+                ))}
+            </ul>
+
+            
+            
+            </>
+          )}
     </div>
   );
 }

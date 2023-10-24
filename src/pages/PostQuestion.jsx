@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { firestore } from './firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { auth, firestore } from './firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 
@@ -57,7 +57,9 @@ export default function PostQuestion() {
         question,
         subject,
         course,
-        images: imageUrls, // This should be an array of image URLs
+        images: imageUrls,  // This should be an array of image URLs
+        timestamp: serverTimestamp(),
+        userRef: auth.currentUser.uid 
       });
 
       console.log('Question posted successfully:', docRef.id);
