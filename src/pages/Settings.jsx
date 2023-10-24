@@ -5,11 +5,11 @@ import {RiAccountCircleFill} from "react-icons/ri"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import { firestore, collection, doc, setDoc } from './firebase';
 import { getAuth } from 'firebase/auth';
-import { getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
-import QuestionCard from '../components/QuestionCard';
+import { getDoc} from 'firebase/firestore';
+
 
 export default function Settings() {
-    const [postings, setPostings] = useState(false);
+    
     const auth = getAuth()
     
   useEffect(() => {
@@ -36,24 +36,7 @@ export default function Settings() {
     }
   }, []);
 
-  useEffect(() => {
-    async function fetchUserPostings(){
-        const postingsRef = collection(firestore, "posts");
-        const q = query(postingsRef, where("userRef", "==", auth.currentUser.uid), orderBy("timestamp", "desc"))
-        const querySnap  = await getDocs(q)
-        let postings = [];
-        querySnap.forEach((doc) => {
-            return postings.push({
-                id: doc.id,
-                data: doc.data()
-            })
-        })
-        setPostings(postings)
-
-    }
-    fetchUserPostings()
-
-},[])
+  
   
   const navigate = useNavigate()
     const [change, setChange] = useState(false)
@@ -241,28 +224,20 @@ export default function Settings() {
               </div>
             </button>
           </Link>
+          <Link to="/my-questions">
+            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
+              <div className="border m-3 bg-slate-200 rounded-3xl">
+                <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
+              </div>
+
+              <div>
+                <p className="font-semibold text-start">My questions</p>
+                <p className="text-slate-600">View my questions</p>
+              </div>
+            </button>
+          </Link>
         </div>
       </div>
-      
-      {postings.length > 0 && (
-            <>
-            <h6 className='text-2xl text-rose-400 text-center font-semibold '>Questions</h6>
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3  '>
-                {postings.map((posting) =>(
-                    <QuestionCard
-                    key = {posting.id}
-                    id = {posting.id}
-                    posting = {posting.data}
-                    
-                    
-                    />
-                ))}
-            </ul>
-
-            
-            
-            </>
-          )}
     </div>
   );
 }

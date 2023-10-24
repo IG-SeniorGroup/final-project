@@ -7,6 +7,7 @@ import CreateAccount from "./pages/CreateAccount";
 import Settings from "./pages/Settings";
 import Login from "./pages/login";
 import PrivateRoute from "./components/PrivateRoute";
+import MyQuestions from "./pages/MyQuestions";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path = "/post-question" element = {<PrivateRoute /> }>
             <Route path ="/post-question"  element = {<PostQuestion />} />
+          </Route>
+          <Route path = "/my-questions" element = {<PrivateRoute /> }>
+            <Route path ="/my-questions"  element = {<MyQuestions />} />
           </Route>
           <Route path ="/login" element = {<Login />} />
         </Routes>
