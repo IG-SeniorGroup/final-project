@@ -1,7 +1,7 @@
 import React from 'react'
 import Moment from 'react-moment'
 import { Link } from 'react-router-dom'
-
+//test comment
 export default function QuestionCard({posting, id}) {
   return (
     <li className="relative flex flex-col border justify-between items-center shadow-md hover:shadow-xl rounded-xl overflow-hidden transition-shadow duration-150 m-[10px]">
