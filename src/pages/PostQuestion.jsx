@@ -94,8 +94,18 @@ export default function PostQuestion() {
                         id = "subject"
                         value={subject}
                         className='border-2 p-2 border-slate-500 bg-slate-50  px-4 rounded-lg text-lg w-full hover:border-slate-950 transition duration-300 ease-in-out'>
-                            <option value="Math">Math</option>
-                            <option value="Science">Science</option>
+                            <option value="">Select Subject</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Environmental Science">Environmental Science</option>
+                            <option value="Biomedical Science">Biomedical Science</option>
+                            <option value="Chemical Engineering">Chemical Engineering</option>
+                            <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
                             
                         </select>
                     </div>

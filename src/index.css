@@ -19,3 +19,11 @@ code {
 h6 {
   font-family: 'Lobster Two', cursive;
 }
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    color: #7CA0FB;
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
+    background: #7CA0FB !important
+}

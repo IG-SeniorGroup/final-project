@@ -8,6 +8,7 @@ import Settings from "./pages/Settings";
 import Login from "./pages/login";
 import PrivateRoute from "./components/PrivateRoute";
 import MyQuestions from "./pages/MyQuestions";
+import Question from "./pages/Question";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+        <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path = "/settings" element = {<PrivateRoute /> }>
             <Route path ="/settings"  element = {<Settings />} />
