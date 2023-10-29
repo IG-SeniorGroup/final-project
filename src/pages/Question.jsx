@@ -16,7 +16,8 @@ export default function Question() {
   const params = useParams();
   const [posting, setPosting] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   useEffect(() => {
     async function fetchPosting() {
       const docRef = doc(firestore, 'posts', params.postingId);
@@ -45,6 +46,9 @@ export default function Question() {
             effect='fade'
             modules={[EffectFade,Autoplay, Navigation, Pagination]}
             autoplay={{ delay: 3000 }}
+            onSlideChange={(swiper) => {
+              setCurrentImageIndex(swiper.activeIndex);
+            }}
           >
             {posting.images.map((url, index) => (
               <SwiperSlide key={index}>
@@ -53,6 +57,7 @@ export default function Question() {
                   style={{
                     background: `url(${posting.images[index]}) center no-repeat`,
                     backgroundSize: 'contain',
+                    opacity: index === currentImageIndex ? 1 : 0,
                   }}
                 ></div>
               </SwiperSlide>
