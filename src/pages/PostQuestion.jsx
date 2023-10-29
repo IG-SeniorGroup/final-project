@@ -3,6 +3,7 @@ import { auth, firestore } from './firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 export default function PostQuestion() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function PostQuestion() {
     images: [],
   });
   const [imageCount, setImageCount] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const { question, subject, images, course } = formData;
 
@@ -63,6 +65,7 @@ export default function PostQuestion() {
   async function handlePosting(e) {
     e.preventDefault();
     try {
+      setUploading(true);
       const imageUrls = await uploadImages(images);
       const docRef = await addDoc(collection(firestore, 'posts'), {
         question,
@@ -78,12 +81,17 @@ export default function PostQuestion() {
     } catch (error) {
       console.error('Error posting question:', error);
     }
+    setUploading(false);
+
   }
 
   return (
     <div>
       <main className="max-w-md px-2 mx-auto">
         <h1 className="text-center mt-6 font-bold text-3xl">Post a new question</h1>
+        {uploading ? ( // Check if uploading is true
+        <Spinner /> // Render the spinner while uploading
+      ) : 
         <form onSubmit={handlePosting}>
           <p className="mt-10 font-semibold text-lg">Ask your question</p>
           <textarea
@@ -159,7 +167,9 @@ export default function PostQuestion() {
             Post Question
           </button>
         </form>
-      </main>
+}
+    </main>
     </div>
   );
 }
+
