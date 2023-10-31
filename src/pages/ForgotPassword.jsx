@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import "./ForgotPassword.css";
-
+import "./CreateAccount";
 const ForgotPassword = () => {
   const onSignUpTextClick = useCallback(() => {
     // Please sync "create account" to the project
@@ -23,9 +23,9 @@ const ForgotPassword = () => {
         instructions to reset you password.
       </div>
       <b className="dont-have-an">Dont have an account?</b>
-      <b className="sign-up" onClick={onSignUpTextClick}>
-        Sign up
-      </b>
+      <b className="account-info">Don't have an account? </b>
+      <a href="/CreateAccount.jsx" className="sign-up">Sign up</a>
+
       <img className="image-11-icon" alt="" src="/image-11@2x.png" />
     </div>
   );
