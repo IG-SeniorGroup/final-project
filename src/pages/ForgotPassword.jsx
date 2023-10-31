@@ -11,7 +11,7 @@ const ForgotPassword = () => {
         Forgot Password
       </h1>
       <input
-        className="[border:none] font-h1-bold-60-82-01px text-sm bg-[transparent] absolute top-[410px] left-[895px] w-[410px] h-[98px]"
+        className="[border:none] font-h1-bold-60-82-01px text-sm bg-[transparent] absolute top-[410px] left-[1250px] w-[410px] h-[98px]"
         value="Email"
         placeholder="name@example.com"
         type="text"
@@ -31,13 +31,14 @@ const ForgotPassword = () => {
       <b
         className="absolute top-[620px] left-[1141px] tracking-[0.1px] leading-[21px] inline-block text-royalblue w-[123px] h-[17px] cursor-pointer"
         onClick={onSignUpTextClick}
+        
       >
         Sign up
       </b>
       <img
         className="absolute top-[297px] left-[155px] rounded-[20px] w-[574px] h-[382.7px] object-cover"
         alt=""
-        src="../assets/image-11@2x.png"
+        src="/image-11@2x.png"
       />
     </div>
   );
