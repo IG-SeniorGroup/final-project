@@ -5,6 +5,9 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase'; // Import 'auth' from your 'firebase.js'
 
 export default function Login() {
+
+
+  
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -102,11 +105,14 @@ export default function Login() {
               <p className='mt-6 text-center text-blue-600 hover:text-blue-700 transition duration-150 ease-in-out'>
                             <Link to = "/forgot-password" className=''>Forgot Password</Link>
                         </p>
-                        <div></div> 
-                            <p className='font-semibold '>Don't have an account?</p>
-                            <p className='text-center text-blue-600 hover:text-blue-700 transition duration-150 ease-in-out'>
-                            <Link to = "/create-account" className=''>Sign up</Link>
-                            </p>
+                        <div className='flex space-x-4 mt-4 items-center justify-center'>
+                          
+                              <p className='font-semibold '>Don't have an account?</p>
+                              <p className='text-center text-blue-600 hover:text-blue-700 transition duration-150 ease-in-out'>
+                              <Link to = "/create-account" className=''>Sign up</Link>
+                              </p>
+                          
+                          </div> 
             </form>
           </div>
         </div>
