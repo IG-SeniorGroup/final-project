@@ -1,44 +1,32 @@
 import { useCallback } from "react";
 import "./ForgotPassword.css";
-
+import "./CreateAccount";
 const ForgotPassword = () => {
   const onSignUpTextClick = useCallback(() => {
     // Please sync "create account" to the project
   }, []);
 
   return (
-    <div className={styles.forgotPassword}>
-      <header className={styles.lightLogoLeft5LinksCe}>
-        <div className={styles.headerBg} />
-        <a className={styles.login}>Login</a>
-        <div className={styles.home}>HOme</div>
-        <div className={styles.logo}>Logo</div>
-        <div className={styles.explore}>Explore</div>
-      </header>
-      <h1 className={styles.forgotPassword1}>Forgot Password</h1>
+    <div className="forgot-password">
+      <h1 className="forgot-password1">Forgot Password</h1>
       <input
-        className={styles.textfieldContainedInput}
+        className="textfield-contained-input"
         value="Email"
         placeholder="name@example.com"
         type="text"
         defaultValue="Email"
       />
-      <button className={styles.forgotPasswordChild} />
-      <img
-        className={styles.bookCheckFillIcon}
-        alt=""
-        src="/book-check-fill.svg"
-      />
-      <h2 className={styles.sendResetInstructions}>Send Reset Instructions</h2>
-      <div className={styles.enterTheEmail}>
+      <button className="forgot-password-child" />
+      <h2 className="send-reset-instructions">Send Reset Instructions</h2>
+      <div className="enter-the-email">
         Enter the email address you used when you joined and we’ll send you
         instructions to reset you password.
       </div>
-      <b className={styles.dontHaveAn}>Dont have an account?</b>
-      <b className={styles.signUp} onClick={onSignUpTextClick}>
-        Sign up
-      </b>
-      <img className={styles.image11Icon} alt="" src="/image-11@2x.png" />
+      <b className="dont-have-an">Dont have an account?</b>
+      <b className="account-info">Don't have an account? </b>
+      <a href="/CreateAccount.jsx" className="sign-up">Sign up</a>
+
+      <img className="image-11-icon" alt="" src="/image-11@2x.png" />
     </div>
   );
 };
