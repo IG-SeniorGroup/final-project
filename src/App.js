@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-        <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
+          <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path ="/forgot-password"  element = {<ForgotPassword />} />
           <Route path = "/settings" element = {<PrivateRoute /> }>

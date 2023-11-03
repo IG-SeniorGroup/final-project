@@ -142,14 +142,16 @@ export default function Question() {
           <p className="text-center font-bold text-xl mb-3">Answers</p>
           {/* Code for Answers HERE!!!!! */}
           <p className="text-center font-bold text-xl mb-3">Comments</p>
-          <div className="mb-4">
+
+          <div className="mb-4 flex">
             <input
               type="text"
               placeholder="Add a comment..."
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
+              className="p-2 m-2 text-lg rounded-lg border-2 w-full text-slate-500 hover:border-3 hover:border-slate-500 focus:border-slate-600 transition ease-in-out duration-300"
             />
-            <button onClick={handleCommentSubmit}>Add Comment</button>
+            <button onClick={handleCommentSubmit} className="p-2 px-4 m-2 text-lg font-semibold bg-slate-200 rounded-xl text shadow-xs hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">Submit</button>
           </div>
           {comments.map((comment) => (
             <div key={comment?.id} className="mb-4 p-4 border rounded-lg">
