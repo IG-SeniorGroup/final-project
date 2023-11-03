@@ -40,7 +40,7 @@ export default function Login() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed in:', userCredential.user);
 
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       setError('Invalid email or password. Please try again.');
       console.error('Error signing in:', error);
