@@ -12,6 +12,7 @@ import Question from "./pages/Question";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import MorePosts from "./pages/MorePosts";
+import Category from "./pages/Category";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           </Route>
           <Route path ="/login" element = {<Login />} />
           <Route path="/more-posts" element={<MorePosts />} />
+          <Route path = "/category/:categoryName" element = {<Category/>}/>
         </Routes>
 
       </Router>
