@@ -11,6 +11,7 @@ import MyQuestions from "./pages/MyQuestions";
 import Question from "./pages/Question";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
+import MorePosts from "./pages/MorePosts";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path ="/my-questions"  element = {<MyQuestions />} />
           </Route>
           <Route path ="/login" element = {<Login />} />
+          <Route path="/more-posts" element={<MorePosts />} />
         </Routes>
 
       </Router>
