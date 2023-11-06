@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import MorePosts from "./pages/MorePosts";
 import Category from "./pages/Category";
+import AnswerQuestion from "./pages/AnswerQuestion";
 
 function App() {
   return (
@@ -28,8 +29,11 @@ function App() {
             <Route path ="/settings"  element = {<Settings />} />
             </Route>
             <Route path = "/post-question" element = {<PrivateRoute /> }>
-            <Route path = "/post-question" element = {<PostQuestion />} />
-          </Route>
+              <Route path = "/post-question" element = {<PostQuestion />} />
+            </Route>
+            <Route path = "/answer-question" element = {<PrivateRoute /> }>
+              <Route path = "/answer-question/:postingId" element = {<AnswerQuestion />} />
+            </Route>
           <Route path = "/post-question" element = {<PrivateRoute /> }>
             <Route path ="/post-question"  element = {<PostQuestion />} />
           </Route>

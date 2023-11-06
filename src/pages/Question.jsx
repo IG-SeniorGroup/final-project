@@ -10,7 +10,8 @@ import "swiper/css/pagination";
 import { doc, firestore, getDoc } from "./firebase";
 import { useParams } from "react-router";
 import { auth } from "./firebase"; // Import Firebase Authentication
-
+import {BsBookmarkFill} from "react-icons/bs"
+import {useNavigate } from 'react-router-dom'
 export default function Question() {
   const params = useParams();
   const [posting, setPosting] = useState(null);
@@ -18,6 +19,7 @@ export default function Question() {
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchPosting() {
@@ -88,6 +90,9 @@ export default function Question() {
       console.error("Error adding comment: ", error);
     }
   };
+  function onAnswer(){
+    navigate(`/answer-question/${params.postingId}`)
+  }
 
   if (loading) {
     return <Spinner />;
@@ -137,11 +142,24 @@ export default function Question() {
             <p className="font-semibold">Question:</p>
             <p className="font-semibold">{posting.question}</p>
           </div>
+
+
+            {/*----------------------------------------SAVED BUTTON----------------------------------------- */}
+          <div>
+            <button className=" mt-6 p-3  bg-slate-200 rounded-xl shadow-md hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">
+              <BsBookmarkFill className="text-2xl text-[#88a8f8]" />
+            </button>
+          </div>
         </div>
         <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
-          <p className="text-center font-bold text-xl mb-3">Answers</p>
-          {/* Code for Answers HERE!!!!! */}
-          <p className="text-center font-bold text-xl mb-3">Comments</p>
+          <div className="flex justify-between mr-2 mb-4">
+            <p  className=" font-bold text-xl ">Answers</p>
+            <button onClick={onAnswer} className="p-2 px-4  font-semibold bg-slate-200 rounded-xl text shadow-xs hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">
+              Answer this question          
+            </button>
+          </div>
+          
+          <p className="font-bold text-xl mb-3">Comments</p>
 
           <div className="mb-4 flex">
             <input
