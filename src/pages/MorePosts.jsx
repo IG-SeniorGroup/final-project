@@ -42,7 +42,7 @@ export default function MorePosts() {
   async function onFetchMorePostings(){
     try {
       const postingsRef = collection(firestore, "posts");
-      const q = query(postingsRef, orderBy("timestamp", "desc"), startAfter(lastFetchedPosting), limit(4))
+      const q = query(postingsRef, orderBy("timestamp", "desc"), startAfter(lastFetchedPosting), limit(8))
         const querySnap  = await getDocs(q)
         const lastVisible = querySnap.docs[querySnap.docs.length - 1];
         setLastFetchPosting(lastVisible);
