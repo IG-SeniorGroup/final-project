@@ -66,7 +66,17 @@ export default function PostQuestion() {
     e.preventDefault();
     try {
       setUploading(true);
-      const imageUrls = await uploadImages(images);
+  
+      let imageUrls = [];
+  
+      if (images.length === 0) {
+        // If no images were uploaded, use the default image URL
+        const defaultImageUrl = '/image.svg';
+        imageUrls.push(defaultImageUrl);
+      } else {
+        imageUrls = await uploadImages(images);
+      }
+  
       const docRef = await addDoc(collection(firestore, 'posts'), {
         question,
         subject,
@@ -75,15 +85,15 @@ export default function PostQuestion() {
         timestamp: serverTimestamp(),
         userRef: auth.currentUser.uid,
       });
-
+  
       console.log('Question posted successfully:', docRef.id);
       navigate('/');
     } catch (error) {
       console.error('Error posting question:', error);
     }
     setUploading(false);
-
   }
+  
 
   return (
     <div>
