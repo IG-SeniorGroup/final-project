@@ -1,13 +1,19 @@
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { firestore } from './firebase';
+import { auth, firestore } from './firebase';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Spinner from '../components/Spinner';
 
 export default function AnswerQuestion() {
+    const navigate = useNavigate();
+    const [subject, setSubject] = useState('');
     const [posting, setPosting] = useState(null);
     const [loading, setLoading] = useState(true);
     const [imageCount, setImageCount] = useState(0);
+    const [uploading, setUploading] = useState(false);
     const params = useParams()
     const [formData, setFormData] = useState({
         answer: '',
@@ -15,12 +21,45 @@ export default function AnswerQuestion() {
     });
     const { answer, images } = formData;
 
+    const userId = auth.currentUser.uid;
+
+    // Define initial user data
+    const initialUserData = {
+        firstName: '',
+        lastName: '',
+    };
+
+    const [userData, setUserData] = useState(initialUserData);
+
+    useEffect(() => {
+        async function fetchUserData() {
+            try {
+                const userDocRef = doc(firestore, "users", userId);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setUserData(userData);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+        fetchUserData();
+    }, [userId]);
+
+    // Get the user's first name and last name from userData
+    const userFirstName = userData.firstName;
+    const userLastName = userData.lastName;
+    const userDisplayName = `${userFirstName} ${userLastName}` || '';
+
     useEffect(() => {
         async function fetchPosting() {
             const docRef = doc(firestore, "posts", params.postingId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setPosting(docSnap.data());
+                setSubject(docSnap.data().subject);
                 setLoading(false);
             }
         }
@@ -49,7 +88,61 @@ export default function AnswerQuestion() {
         }
     }
 
+    function removeImage(index) {
+        setFormData((prevState) => {
+          const updatedImages = [...prevState.images];
+          setImageCount(prevCount => prevCount - 1);
+          updatedImages.splice(index, 1);
+          return { ...prevState, images: updatedImages };
+        });
+      }
+      async function uploadImages(imageFiles) {
+        const imageUrls = [];
+        for (const imageFile of imageFiles) {
+          const storage = getStorage();
+          const imageRef = ref(storage, 'images/' + imageFile.name);
+          await uploadBytes(imageRef, imageFile);
+          const imageUrl = await getDownloadURL(imageRef);
+          imageUrls.push(imageUrl);
+        }
+    
+        return imageUrls;
+      }
+    
+      async function handlePosting(e) {
+        e.preventDefault();
+        try {
+          setUploading(true);
+      
+          let imageUrls = [];
+      
+          if (images.length === 0) {
+            // If no images were uploaded, use the default image URL
+            const defaultImageUrl = '/image.svg';
+            imageUrls.push(defaultImageUrl);
+          } else {
+            imageUrls = await uploadImages(images);
+          }
+      
+          const docRef = await addDoc(collection(firestore, 'answers'), {
+            answer,
+            images: imageUrls,
+            timestamp: serverTimestamp(),
+            userRef: auth.currentUser.uid,
+            userDisplayName,
+            postingId: params.postingId,
+          });
+      
+          console.log('Question posted successfully:', docRef.id);
+          const questionUrl = `/category/${subject}/${params.postingId}`;
+          navigate(questionUrl);
+        } catch (error) {
+          console.error('Error posting question:', error);
+        }
+        setUploading(false);
+      }
     return (
+        <form onSubmit={handlePosting}>
         <div className='max-w-2xl mx-auto px-3'>
             <div className='mt-10 text-center font-bold text-2xl'>
                 <p>Answer question</p>
@@ -90,7 +183,25 @@ export default function AnswerQuestion() {
             className="w-full p-2 bg-slate-50 border-2 border-slate-500 rounded-lg hover-border-slate-950 transition duration-300 ease-in-out"
             disabled={imageCount >= 2}
           />
+          <div className="mt-4">
+            {images.map((image, index) => (
+              <div key={index} className="flex justify-between">
+                <p>{image.name}</p>
+                <button type="button" onClick={() => removeImage(index)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            className="mt-6 w-full bg-[#7CA0FB] text-white px-7 py-3 text-lg font-semibold uppercase rounded-xl shadow-md hover:bg-blue-400 transition duration-400 ease-in-out hover:shadow-lg active:bg-blue-600"
+            type="submit"
+          >
+            Post Answer
+          </button>
             </div>
         </div>
+        </form>
+        
     )
 }
