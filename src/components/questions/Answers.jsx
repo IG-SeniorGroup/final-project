@@ -1,5 +1,7 @@
 import React, { Fragment, useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 import ImageViewer from "react-simple-image-viewer";
+import {HiOutlineThumbUp, HiOutlineThumbDown} from "react-icons/hi"
 
 const Answers = ({ answer }) => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -41,6 +43,27 @@ const Answers = ({ answer }) => {
             </Fragment>
           );
         })}
+        <div className="flex items-center w-full justify-between mr-2">
+          <div>
+
+            <p>
+              <Link className="" to = {`/answer/${answer.postingId}`} >
+                View answer
+              </Link>
+            </p>
+          </div>
+          <div className="flex space-x-3">
+            <div className="text-2xl">
+              <HiOutlineThumbUp />
+
+            </div>
+            <div className="text-2xl">
+
+              <HiOutlineThumbDown />
+            </div>
+          </div>
+          
+        </div>
     </div>
   );
 };

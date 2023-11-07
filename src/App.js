@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import MorePosts from "./pages/MorePosts";
 import Category from "./pages/Category";
 import AnswerQuestion from "./pages/AnswerQuestion";
+import AnswerPage from "./pages/AnswerPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path = "/" element = {<Home />}/>
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
+          <Route path = "/answer/:postingId" element = {<AnswerPage />} />
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path ="/forgot-password"  element = {<ForgotPassword />} />
           <Route path = "/settings" element = {<PrivateRoute /> }>

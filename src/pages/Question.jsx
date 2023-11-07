@@ -203,7 +203,7 @@ export default function Question() {
                 </p>
               </div>
               <Answers answer={answer} />
-              <p className="text-lg">{answer?.answer}</p>
+              {/* <p className="text-lg">{answer?.answer}</p> */}
             </div>
           );
         })}
