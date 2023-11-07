@@ -4,27 +4,35 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   background-color: rgb(248, 253, 255);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 h6 {
-  font-family: 'Lobster Two', cursive;
+  font-family: "Lobster Two", cursive;
 }
 .swiper-button-next:after,
-.swiper-button-prev:after{
-    color: #7CA0FB;
+.swiper-button-prev:after {
+  color: #7ca0fb;
 }
 
-.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
-    background: #7CA0FB !important
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: #7ca0fb !important;
+}
+
+.react-simple-image-viewer__modal-content {
+  padding-top: 60px !important;
+}
+.react-simple-image-viewer__close {
+  margin-top: 3rem !important;
+  z-index: 3;
 }
