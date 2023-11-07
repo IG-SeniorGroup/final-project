@@ -116,11 +116,8 @@ export default function AnswerQuestion() {
       
           let imageUrls = [];
       
-          if (images.length === 0) {
-            // If no images were uploaded, use the default image URL
-            const defaultImageUrl = '/image.svg';
-            imageUrls.push(defaultImageUrl);
-          } else {
+          if (images.length > 0) {
+            // If images were uploaded, get their URLs
             imageUrls = await uploadImages(images);
           }
       
