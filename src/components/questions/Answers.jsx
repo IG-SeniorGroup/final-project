@@ -16,7 +16,7 @@ const Answers = ({ answer }) => {
     setIsViewerOpen(false);
   };
   return (
-    <div className="flex items-start gap-4">
+    <div className="flex items-start gap-4 ">
       {answer?.images
         ?.filter((img) => img != "/image.svg")
         .map((img, index) => {
@@ -43,24 +43,36 @@ const Answers = ({ answer }) => {
             </Fragment>
           );
         })}
-        <div className="flex items-center w-full justify-between mr-2">
+        <div className="flex items-center w-full justify-between mr-2 pt-1">
           <div>
 
             <p>
-              <Link className="" to = {`/answer/${answer.postingId}`} >
+              <Link className=" text-blue-600 hover:text-blue-700 transition ease-in-out duration-150" to = {`/answer/${answer.id}`} >
                 View answer
               </Link>
             </p>
           </div>
-          <div className="flex space-x-3">
-            <div className="text-2xl">
-              <HiOutlineThumbUp />
+          <div className="flex space-x-3 relative">
+            <button>
 
-            </div>
-            <div className="text-2xl">
+              <div className="text-2xl">
+                <HiOutlineThumbUp />
+                <div className="text-sm  absolute left-5 top-4 bg- ">
+                  1
+                </div>
 
-              <HiOutlineThumbDown />
-            </div>
+              </div>
+            </button>
+            <button>
+              
+              <div className="text-2xl">
+
+                <HiOutlineThumbDown />
+                <div className="text-sm  absolute left-14 top-4 bg- ">
+                  0
+                </div>
+              </div>
+            </button>
           </div>
           
         </div>
