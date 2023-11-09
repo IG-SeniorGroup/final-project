@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { firestore } from './firebase';
+import { auth } from './firebase';
 import {
   doc,
   getDoc,
@@ -80,6 +81,12 @@ export default function AnswerPage() {
   }, [params.postingId]);
 
   const handleLike = async () => {
+    if (!auth.currentUser || !auth.currentUser.uid) {
+      console.error("User is not logged in.");
+      alert("You need to log in to like this answer.");
+      return;
+    }
+
     if (!liked) {
       // Check if the user has already voted
       const hasVoted = localStorage.getItem(`vote_${params.postingId}`);
@@ -96,6 +103,12 @@ export default function AnswerPage() {
   };
 
   const handleDislike = async () => {
+    if (!auth.currentUser || !auth.currentUser.uid) {
+      console.error("User is not logged in.");
+      alert("You need to log in to dislike this answer.");
+      return;
+    }
+
     if (!disliked) {
       // Check if the user has already voted
       const hasVoted = localStorage.getItem(`vote_${params.postingId}`);
@@ -109,7 +122,8 @@ export default function AnswerPage() {
         localStorage.setItem(`vote_${params.postingId}`, 'dislike');
       }
     }
-  };
+  }
+
 
   if (loading) {
     return <Spinner />;
