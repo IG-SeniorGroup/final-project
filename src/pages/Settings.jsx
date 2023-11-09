@@ -92,7 +92,7 @@ export default function Settings() {
 
       <section className="p-5 max-w-6xl mx-auto flex justify-center items-center flex-col">
         <h1 className="text-center text-3xl font-bold">Account settings</h1>
-        <div className="border p-4 m-4 border-slate-300 rounded-xl w-full">
+        <div className="border p-4 m-4 border-slate-300 rounded-xl w-full shadow-lg ">
           <p className="text-center mb-4 font-semibold text-xl">
             Personal information
           </p>
@@ -189,7 +189,7 @@ export default function Settings() {
       <div className="flex items-center justify-center">
         <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3">
           <Link to="/saved-questions">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
+            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-xl">
                 <BsFillBookmarkFill className="text-2xl bg-slate-200 m-3" />
               </div>
@@ -201,7 +201,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to="/settings">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
+            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <RiAccountCircleFill className="text-3xl bg-slate-200 m-3" />
               </div>
@@ -213,7 +213,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to="/post-question">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
+            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
               </div>
@@ -225,7 +225,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to="/my-questions">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5">
+            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
               </div>

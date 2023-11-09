@@ -140,7 +140,7 @@ export default function Question() {
             pagination={{ type: "progressbar" }}
             effect="fade"
             modules={[EffectFade, Autoplay, Navigation, Pagination]}
-            autoplay={{ delay: 3000 }}
+            
             onSlideChange={(swiper) => {
               setCurrentImageIndex(swiper.activeIndex);
             }}
@@ -160,31 +160,44 @@ export default function Question() {
       </Swiper>
     </div>
   </div>
-  <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-[#F9F9F9] lg:space-x-5">
-    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
-      <div className="flex items-center space-x-5">
-        <p className="font-semibold">Subject:</p>
-        <p className="font-semibold">{posting.subject}</p>
-      </div>
-      <div className="flex items-center space-x-8 mt-3">
-        <p className="font-semibold">Class:</p>
-        <p className="font-semibold">{posting.course}</p>
-      </div>
-      <div className="flex items-center space-x-2 mt-3">
-        <p className="font-semibold">Question:</p>
-        <p className="font-semibold">{posting.question}</p>
-      </div>
+  <div className="mx-auto bg-[#F9F9F9] m-4 max-w-6xl rounded-xl shadow-lg ">
+        <div className="flex items-center space-x-10 m-4  justify-center">
+              <div>
+
+                  <div className="flex items-center space-x-5 ">
+                    <p className="font-semibold">Subject:</p>
+                    <p className="font-semibold">{posting.subject}</p>
+                  </div>
+                  <div className="flex items-center space-x-8 mt-3">
+                    <p className="font-semibold">Class:</p>
+                    <p className="font-semibold">{posting.course}</p>
+                  </div>
+                  
+              </div>
+              <div className="">
+
+                <div className="flex items-center space-x-2 pt-8">
+                  <p className="font-semibold">Question:</p>
+                  <p className="font-semibold">{posting.question}</p>
+
+                </div>
+                      <div>
+                      <button className=" mt-6 p-3  bg-slate-200 rounded-xl shadow-md hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">
+                        <BsBookmarkFill className="text-2xl text-[#88a8f8]" />
+                      </button>
+                      </div>
+              </div>
+              
+        </div>
 
       {/*----------------------------------------SAVED BUTTON----------------------------------------- */}
-      <div>
-        <button className=" mt-6 p-3  bg-slate-200 rounded-xl shadow-md hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">
-          <BsBookmarkFill className="text-2xl text-[#88a8f8]" />
-        </button>
-      </div>
-    </div>
+      
+
+  
+  <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto rounded-lg shadow-lg bg-[#F9F9F9] lg:space-x-5">
     <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
-      <div className="flex justify-between mr-2 mb-4">
-        <p className=" font-bold text-xl ">Answers</p>
+    <div className="flex justify-between mr-2 mb-4">
+        <p className=" font-bold text-xl pl-4">Answers</p>
         <button
           onClick={onAnswer}
           className="p-2 px-4  font-semibold bg-slate-200 rounded-xl text shadow-xs hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200"
@@ -208,6 +221,11 @@ export default function Question() {
           );
         })}
       </div>
+
+      
+    </div>
+    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
+      
       <p className="font-bold text-xl mb-3">Comments</p>
       <div className="comments-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
         <div className="mb-4 flex">
@@ -216,7 +234,7 @@ export default function Question() {
             placeholder="Add a comment..."
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
-            className="p-2 m-2 text-lg rounded-lg border-2 w-full text-slate-500 hover:border-3 hover:border-slate-500 focus:border-slate-600 transition ease-in-out duration-300"
+            className=" p-2 m-2 text-lg rounded-lg border-2 w-full text-slate-500 hover:border-3 hover:border-slate-500 focus:border-slate-600 transition ease-in-out duration-300"
           />
           <button
             onClick={handleCommentSubmit}
@@ -242,6 +260,7 @@ export default function Question() {
         ))}
       </div>
     </div>
+  </div>
   </div>
 </div>
   )}
