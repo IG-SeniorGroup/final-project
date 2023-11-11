@@ -1,70 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
-import { firestore } from './firebase';
-import Search from '../components/Search';
-import QuestionCard from '../components/QuestionCard';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { collection, query, orderBy, limit, getDocs, where } from "firebase/firestore";
+import { firestore } from "./firebase";
+import Search from "../components/Search";
+import QuestionCard from "../components/QuestionCard";
 
 export default function Home() {
-  
   const [postings, setPostings] = useState(false);
-  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-      async function fetchUserPostings(){
-          const postingsRef = collection(firestore, "posts");
-          const q = query(postingsRef, orderBy("timestamp", "desc"), limit(4))
-          const querySnap  = await getDocs(q)
-          let postings = [];
-          querySnap.forEach((doc) => {
-              return postings.push({
-                  id: doc.id,
-                  data: doc.data()
-              })
-          })
-          setPostings(postings)
-  
+    async function fetchUserPostings() {
+      setLoading(true);
+      const postingsRef = collection(firestore, "posts");
+
+      if (searchQuery === "") {
+        const q = query(postingsRef, orderBy("timestamp", "desc"), limit(10));
+        const querySnap = await getDocs(q);
+        let postings = [];
+        querySnap.forEach((doc) => {
+          postings.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+        setPostings(postings);
+        setLoading(false);
+        return;
       }
-      fetchUserPostings()
-  
-  },[])
-  
+
+      const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const regex = new RegExp(lowerCaseSearchQuery, "i");
+
+      const q = query(postingsRef, orderBy("timestamp", "desc"));
+
+      try {
+        const querySnap = await getDocs(q);
+        let postings = [];
+        querySnap.forEach((doc) => {
+          const question = doc.data().question.toLowerCase();
+          if (question.match(regex)) {
+            postings.push({
+              id: doc.id,
+              data: doc.data(),
+            });
+          }
+        });
+        setPostings(postings);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user postings:", error);
+      }
+    }
+
+    const timer = setTimeout(() => {
+      fetchUserPostings();
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
 
   return (
     <div className="max-w-6xl mx-auto">
       {/* Your search component */}
-      <Search />
+      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <div>
         <p className="font-bold text-2xl">Recently posted</p>
 
-        
         <p className="text-blue-600 hover:text-blue-700 transition ease-in-out duration-150">
           <Link to="/more-posts">Show more posts</Link>
         </p>
-        {postings.length > 0 && (
-            <>
-            
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-4  '>
-                {postings.map((posting) =>(
+        {loading ? (
+          <div className="flex items-center justify-center h-56">
+            <p className="w-10 h-10 bg-white border-white border-t-blue-200 border-r-blue-500 border-b-blue-800 animate-spin border-2 rounded-full"></p>
+          </div>
+        ) : (
+          <>
+            {postings.length > 0 ? (
+              <>
+                <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4  ">
+                  {postings.map((posting) => (
                     <QuestionCard
-                    key = {posting.id}
-                    id = {posting.id}
-                    posting = {posting.data}
-                    
-                    
+                      key={posting.id}
+                      id={posting.id}
+                      posting={posting.data}
                     />
-                ))}
-            </ul>
-
-            
-            
-            </>
-          )}
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <div className="flex items-center justify-center h-56">
+                <p>No questions found</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
 }
-
 
 // useEffect(() => {
 //     // Define a query to get the most recent 5 questions with images from Firestore
