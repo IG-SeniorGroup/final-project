@@ -12,6 +12,9 @@ body {
   font-family: "Nunito Sans", sans-serif;
   background-color: rgb(248, 253, 255);
 }
+.footer {
+  background-color: rgb(15, 42, 50);
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -35,4 +38,32 @@ h6 {
 .react-simple-image-viewer__close {
   margin-top: 3rem !important;
   z-index: 3;
+}
+h5 {
+  position: relative;
+  
+  font-weight: bold!important;
+  
+  letter-spacing: 2px!important;
+  overflow: hidden;
+  border-right: 2px solid hsl(0, 0%, 80%);
+  white-space: nowrap;
+  animation: typewriter 2.5s steps(44) 1s 1 normal both,
+    blinkTextCursor 750ms infinite;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 200px;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: hsl(0, 4%, 35%);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }

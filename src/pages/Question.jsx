@@ -11,7 +11,7 @@ import { doc, firestore, getDoc } from "./firebase";
 import { useParams } from "react-router";
 import { auth } from "./firebase"; // Import Firebase Authentication
 import { BsBookmarkFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Answers from "../components/questions/Answers";
 export default function Question() {
   const params = useParams();
@@ -210,7 +210,7 @@ export default function Question() {
           return (
             <div key={answer?.id} className="mb-4 p-4 border rounded-lg">
               <div className="flex justify-between mb-2">
-                <p className="font-bold text-lg">{answer?.userDisplayName}</p>
+                <Link to= {`/profile/${answer?.userRef}`} className="font-bold text-lg">{answer?.userDisplayName}</Link>
                 <p className="text-gray-500 text-sm">
                   {formatTimestamp(answer.timestamp)}
                 </p>
@@ -224,7 +224,7 @@ export default function Question() {
 
       
     </div>
-    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
+    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0 ">
       
       <p className="font-bold text-xl mb-3">Comments</p>
       <div className="comments-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
@@ -246,7 +246,7 @@ export default function Question() {
         {comments.map((comment) => (
           <div key={comment?.id} className="mb-4 p-4 border rounded-lg">
             <div className="flex justify-between mb-2">
-              <p className="font-bold text-lg">{comment?.userDisplayName}</p>
+              <Link to = {`/profile/${comment.userId}`} className="font-bold text-lg">{comment?.userDisplayName}</Link>
               <p className="text-gray-500 text-sm">
                 {comment.time
                   ? moment(comment.time, "MMMM D, YYYY h:mm A").format(

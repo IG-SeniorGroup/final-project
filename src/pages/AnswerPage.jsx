@@ -143,7 +143,7 @@ export default function AnswerPage() {
             pagination={{ type: 'progressbar' }}
             effect="fade"
             modules={[EffectFade, Autoplay, Navigation, Pagination]}
-            autoplay={{ delay: 3000 }}
+            
             onSlideChange={(swiper) => {
               setCurrentImageIndex(swiper.activeIndex);
             }}

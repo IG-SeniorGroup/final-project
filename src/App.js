@@ -15,6 +15,9 @@ import MorePosts from "./pages/MorePosts";
 import Category from "./pages/Category";
 import AnswerQuestion from "./pages/AnswerQuestion";
 import AnswerPage from "./pages/AnswerPage";
+import Footer from "./components/Footer";
+
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
@@ -25,6 +28,7 @@ function App() {
           <Route path = "/" element = {<Home />}/>
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path = "/answer/:postingId" element = {<AnswerPage />} />
+          <Route path = "/profile/:profileId" element = {<UserProfile />}></Route>
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path ="/forgot-password"  element = {<ForgotPassword />} />
           <Route path = "/settings" element = {<PrivateRoute /> }>
@@ -46,6 +50,7 @@ function App() {
           <Route path="/more-posts" element={<MorePosts />} />
           <Route path = "/category/:categoryName" element = {<Category/>}/>
         </Routes>
+        <Footer />
 
       </Router>
       
