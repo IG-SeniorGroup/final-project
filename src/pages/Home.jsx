@@ -16,7 +16,7 @@ export default function Home() {
       const postingsRef = collection(firestore, "posts");
 
       if (searchQuery === "") {
-        const q = query(postingsRef, orderBy("timestamp", "desc"), limit(10));
+        const q = query(postingsRef, orderBy("timestamp", "desc"), limit(8));
         const querySnap = await getDocs(q);
         let postings = [];
         querySnap.forEach((doc) => {
