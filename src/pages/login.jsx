@@ -3,6 +3,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase'; // Import 'auth' from your 'firebase.js'
+import OAuth from '../components/OAuth';
 
 export default function Login() {
 
@@ -112,8 +113,14 @@ export default function Login() {
                               <Link to = "/create-account" className=''>Sign up</Link>
                               </p>
                           
-                          </div> 
+                          </div>
+                <div className='flex items-center my-4 before:border-t before:flex-1  before:border-gray after:border-t after:flex-1  after:border-gray-300' >
+                  <p className='text-center font-semibold mx-4'>OR</p>
+                </div>
+                <OAuth />
+            
             </form>
+            
           </div>
         </div>
       </section>
