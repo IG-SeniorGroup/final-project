@@ -6,7 +6,6 @@ import {FcGoogle} from "react-icons/fc"
 import { useNavigate } from 'react-router-dom'
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 import { doc, firestore, getDoc, setDoc } from '../pages/firebase'
-import { serverTimestamp } from 'firebase/firestore'
 
 export default function OAuth() {
     const navigate = useNavigate()
@@ -22,12 +21,15 @@ export default function OAuth() {
             const docSnap = await getDoc(docRef)
 
             if(!docSnap.exists()){
+                const displayNameArray = user.displayName.split(' ');
+                const firstName = displayNameArray[0];
+                const lastName = displayNameArray.slice(1).join(' ');
                 await setDoc(docRef, {
-                    name: user.displayName, 
+                    firstName: firstName,
+                    lastName: lastName,
                     email: user.email,
-                    timestamp: serverTimestamp(),
-                })
-            }
+            });
+        }
             navigate("/")
         } catch (error) {
             console.log("error")
