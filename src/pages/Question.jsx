@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, addDoc, query, where, orderBy, getDocs } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, query, where, orderBy, getDocs, setDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import Spinner from "../components/Spinner";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,8 +11,9 @@ import { doc, firestore, getDoc } from "./firebase";
 import { useParams } from "react-router";
 import { auth } from "./firebase"; // Import Firebase Authentication
 import { BsBookmarkFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Answers from "../components/questions/Answers";
+
 export default function Question() {
   const params = useParams();
   const [posting, setPosting] = useState(null);
@@ -20,8 +21,11 @@ export default function Question() {
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     async function fetchPosting() {
@@ -66,11 +70,135 @@ export default function Question() {
     fetchAnswer();
   }, [params.postingId]);
 
+  useEffect(() => {
+    const checkSavedStatus = async () => {
+      if (auth.currentUser) {
+        const userDocRef = doc(firestore, "users", auth.currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const savedQuestions = userDocSnap.data().savedQuestions || [];
+          const savedStatus = savedQuestions.includes(params.postingId);
+          
+          // Set the saved status in both state and local storage
+          setIsSaved(savedStatus);
+          localStorage.setItem("isSaved", savedStatus.toString());
+        }
+      }
+    };
+
+    // Check local storage first for saved status
+    const savedStatusFromLocalStorage = localStorage.getItem("isSaved");
+    if (savedStatusFromLocalStorage !== null) {
+      setIsSaved(savedStatusFromLocalStorage === "true");
+    } else {
+      // If not found in local storage, fetch from Firestore
+      checkSavedStatus();
+    }
+  }, [params.postingId]);
+
+  const handleSaveToggle = async () => {
+    if (!auth || !firestore) {
+      console.error("Authentication or Firestore is not properly initialized.");
+      return;
+    }
+  
+    const user = auth.currentUser;
+  
+    if (user) {
+      const userDocRef = doc(firestore, "users", auth.currentUser.uid);
+  
+      if (isSaved) {
+        // If already saved, remove it from the user's savedQuestions array
+        await setDoc(userDocRef, {
+          savedQuestions: arrayRemove(params.postingId),
+        });
+  
+        // Remove the post from the "savedQuestions" collection
+        const savedQuestionsRef = collection(firestore, "savedQuestions");
+        const querySnapshot = await getDocs(
+          query(
+            savedQuestionsRef,
+            where("userId", "==", auth.currentUser.uid),
+            where("postId", "==", params.postingId)
+          )
+        );
+  
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+      } else {
+        // If not saved, add it to the user's savedQuestions array
+        await setDoc(userDocRef, {
+          savedQuestions: arrayUnion(params.postingId),
+        });
+  
+        // Call a function to add the post to the Firestore collection of saved questions
+        addPostToSavedQuestions(params.postingId);
+      }
+  
+      // Toggle the save status
+      setIsSaved(!isSaved);
+    } 
+    const newSavedStatus = !isSaved;
+    setIsSaved(newSavedStatus);
+    localStorage.setItem("isSaved", newSavedStatus.toString());
+  };
+
+  //
+  const addPostToSavedQuestions = async (postId) => {
+    try {
+      // Assuming "savedQuestions" is a Firestore collection
+      const savedQuestionsRef = collection(firestore, "savedQuestions");
+  
+      // Check if the post is already saved
+      const existingSavedQuestionQuery = query(
+        savedQuestionsRef,
+        where("userId", "==", auth.currentUser.uid),
+        where("postId", "==", postId)
+      );
+  
+      const existingSavedQuestionSnapshot = await getDocs(existingSavedQuestionQuery);
+  
+      if (existingSavedQuestionSnapshot.empty) {
+        // The post is not already saved, so proceed to save it
+  
+        // Get the post data
+        const postDocRef = doc(firestore, "posts", postId);
+        const postDocSnap = await getDoc(postDocRef);
+  
+        if (postDocSnap.exists()) {
+          const postData = postDocSnap.data();
+  
+          // Create a new object with only the necessary fields
+          const savedQuestionData = {
+            userId: auth.currentUser.uid,
+            postId: postId,
+            question: postData.question,
+            subject: postData.subject,
+            course: postData.course,
+            images: postData.images,
+            timestamp: new Date(),
+          };
+  
+          // Add the post to the "savedQuestions" collection
+          await addDoc(savedQuestionsRef, savedQuestionData);
+        }
+      } else {
+        console.log("Post is already saved.");
+      }
+    } catch (error) {
+      console.error("Error adding post to saved questions:", error);
+    }
+  };
+  
+  //
+
   const handleCommentSubmit = async () => {
     if (commentInput.trim() === "") {
       return;
     }
-
+  
     // Get the current user's ID
     const userId = auth.currentUser.uid;
 
@@ -110,6 +238,8 @@ export default function Question() {
   function onAnswer() {
     navigate(`/answer-question/${params.postingId}`);
   }
+
+  
 
   if (loading) {
     return <Spinner />;
@@ -182,9 +312,11 @@ export default function Question() {
 
                 </div>
                       <div>
-                      <button className=" mt-6 p-3  bg-slate-200 rounded-xl shadow-md hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200">
-                        <BsBookmarkFill className="text-2xl text-[#88a8f8]" />
-                      </button>
+                      <button
+                onClick={handleSaveToggle}
+                className="mt-6 p-3 bg-slate-200 rounded-xl shadow-md hover:bg-slate-300 hover:shadow-md transition ease-in-out duration-200"
+              ><BsBookmarkFill className="text-2xl" style={{ color: isSaved ? 'black' : '#88a8f8' }}/>    {/* style changed*/ }          
+              </button>
                       </div>
               </div>
               
@@ -210,7 +342,7 @@ export default function Question() {
           return (
             <div key={answer?.id} className="mb-4 p-4 border rounded-lg">
               <div className="flex justify-between mb-2">
-                <Link to= {`/profile/${answer?.userRef}`} className="font-bold text-lg">{answer?.userDisplayName}</Link>
+                <p className="font-bold text-lg">{answer?.userDisplayName}</p>
                 <p className="text-gray-500 text-sm">
                   {formatTimestamp(answer.timestamp)}
                 </p>
@@ -224,7 +356,7 @@ export default function Question() {
 
       
     </div>
-    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0 ">
+    <div className="w-full h-[300px] lg:h-[400px] z-10 overflow-x-hidden mt-6 lg:mt-0">
       
       <p className="font-bold text-xl mb-3">Comments</p>
       <div className="comments-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
@@ -246,7 +378,7 @@ export default function Question() {
         {comments.map((comment) => (
           <div key={comment?.id} className="mb-4 p-4 border rounded-lg">
             <div className="flex justify-between mb-2">
-              <Link to = {`/profile/${comment.userId}`} className="font-bold text-lg">{comment?.userDisplayName}</Link>
+              <p className="font-bold text-lg">{comment?.userDisplayName}</p>
               <p className="text-gray-500 text-sm">
                 {comment.time
                   ? moment(comment.time, "MMMM D, YYYY h:mm A").format(
