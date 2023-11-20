@@ -16,7 +16,6 @@ import Category from "./pages/Category";
 import AnswerQuestion from "./pages/AnswerQuestion";
 import AnswerPage from "./pages/AnswerPage";
 import Footer from "./components/Footer";
-import SavedQuestions from './pages/SavedQuestions';
 
 import UserProfile from "./components/UserProfile";
 
@@ -50,7 +49,6 @@ function App() {
           <Route path ="/login" element = {<Login />} />
           <Route path="/more-posts" element={<MorePosts />} />
           <Route path = "/category/:categoryName" element = {<Category/>}/>
-          <Route path="/saved-questions" element={<SavedQuestions />} />
         </Routes>
         <Footer />
 
