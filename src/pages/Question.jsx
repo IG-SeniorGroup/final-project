@@ -31,17 +31,22 @@ export default function Question() {
       if (auth.currentUser) {
         const userDocRef = doc(firestore, "users", auth.currentUser.uid);
         const userDocSnap = await getDoc(userDocRef);
-
+    
         if (userDocSnap.exists()) {
           const savedQuestions = userDocSnap.data().savedQuestions || [];
           const savedStatus = savedQuestions.includes(params.postingId);
           setIsSaved(savedStatus);
-
+    
           // Save the status to localStorage
           localStorage.setItem('savedStatus', JSON.stringify(savedStatus));
         }
+      } else {
+        // Clear the saved status from localStorage if the user is not signed in
+        localStorage.removeItem('savedStatus');
+        setIsSaved(false);
       }
     };
+    
 
     // Move the fetchPosting function inside the useEffect and call it
     async function fetchPosting() {
