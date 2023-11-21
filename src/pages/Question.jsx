@@ -128,40 +128,44 @@ export default function Question() {
     const user = auth.currentUser;
   
     if (user) {
+      const userDocRef = doc(firestore, "users", auth.currentUser.uid);
   
-    const userDocRef = doc(firestore, "users", auth.currentUser.uid);
+      if (isSaved) {
+        // If already saved, remove it from the user's savedQuestions array
+        await setDoc(
+          userDocRef,
+          { savedQuestions: arrayRemove(params.postingId) },
+          { merge: true } // Use merge option to update only the specified field
+        );
   
-    if (isSaved) {
-      // If already saved, remove it from the user's savedQuestions array
-      await setDoc(userDocRef, {
-        savedQuestions: arrayRemove(params.postingId),
-      });
-      //
-      // Remove the post from the "savedQuestions" collection
-      const savedQuestionsRef = collection(firestore, "savedQuestions");
-      const querySnapshot = await getDocs(
-        query(savedQuestionsRef, where("userId", "==", auth.currentUser.uid), where("postId", "==", params.postingId))
-      );
+        // Remove the post from the "savedQuestions" collection
+        const savedQuestionsRef = collection(firestore, "savedQuestions");
+        const querySnapshot = await getDocs(
+          query(
+            savedQuestionsRef,
+            where("userId", "==", auth.currentUser.uid),
+            where("postId", "==", params.postingId)
+          )
+        );
   
-      querySnapshot.forEach(async (doc) => {
-        await deleteDoc(doc.ref);
-      });
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+      } else {
+        // If not saved, add it to the user's savedQuestions array
+        await setDoc(
+          userDocRef,
+          { savedQuestions: arrayUnion(params.postingId) },
+          { merge: true } // Use merge option to update only the specified field
+        );
+        addPostToSavedQuestions(params.postingId);
+      }
   
-      //
-    } else {
-      await setDoc(userDocRef, {
-        savedQuestions: arrayUnion(params.postingId),
-      });
-      addPostToSavedQuestions(params.postingId);
-  
+      // Toggle the save status
+      setIsSaved(!isSaved);
+      localStorage.setItem('savedStatus', JSON.stringify(!isSaved));
     }
-  
-    // Toggle the save status
-    setIsSaved(!isSaved);
-    localStorage.setItem('savedStatus', JSON.stringify(!isSaved));
-  };//
-  
-  }
+  };
 
   //
   const addPostToSavedQuestions = async (postId) => {
