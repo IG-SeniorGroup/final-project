@@ -16,7 +16,8 @@ export default function Footer() {
         <p className='text-center pb-2 text-white'>Copyright © 2023 BrainLink </p>
         <div className='space-x-4 text-center pb-4'>
             <Link to = "/" className='underline border-r-2 border-slate-400 pr-3 text-white'>Home</Link>
-            <Link to = "/explore" className='underline text-white'>Explore</Link>
+            <Link to = "/explore" className='underline border-r-2 border-slate-400 pr-3 text-white'>Explore</Link>
+            <Link to="/about" className='underline text-white'>About BrainLink</Link>
         </div>
 
     </div>
