@@ -1,4 +1,4 @@
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { auth, firestore } from './firebase';
@@ -129,6 +129,11 @@ export default function AnswerQuestion() {
             userDisplayName,
             postingId: params.postingId,
           });
+
+          // Mark the question as answered by updating its 'answered' field
+    const postRef = doc(firestore, 'posts', params.postingId);
+    await updateDoc(postRef, { answered: true }); // Update the 'answered' field to true
+
       
           console.log('Question posted successfully:', docRef.id);
           const questionUrl = `/category/${subject}/${params.postingId}`;

@@ -1,6 +1,4 @@
-//importing all files for connections
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
-
 import Navbar from './components/Navbar';
 import PostQuestion from "./pages/PostQuestion";
 import CreateAccount from "./pages/CreateAccount";
@@ -18,8 +16,8 @@ import AnswerPage from "./pages/AnswerPage";
 import Footer from "./components/Footer";
 import SavedQuestions from './pages/SavedQuestions';
 import AboutPage from "./pages/AboutPage";
-
 import UserProfile from "./components/UserProfile";
+import LearningResources from "./pages/LearningResources";
 
 function App() {
   return (
@@ -30,6 +28,8 @@ function App() {
           <Route path = "/" element = {<Home />}/>
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path = "/answer/:postingId" element = {<AnswerPage />} />
+          <Route path = "/learning-resources" element = {<LearningResources />} />
+          
           <Route path = "/profile/:profileId" element = {<UserProfile />}></Route>
           <Route path ="/create-account"  element = {<CreateAccount />} />
           <Route path ="/forgot-password"  element = {<ForgotPassword />} />
