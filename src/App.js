@@ -19,6 +19,8 @@ import SavedQuestions from './pages/SavedQuestions';
 import AboutPage from "./pages/AboutPage";
 import UserProfile from "./components/UserProfile";
 import LearningResources from "./pages/LearningResources";
+import UnansweredQuestions from "./pages/Unanswered";
+import MostAnswered from "./pages/MostAnswered";
 import Subject from "./pages/Subjects";
 import Homepage from "./pages/Homepage";
 function App() {
@@ -31,6 +33,8 @@ function App() {
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path = "/answer/:postingId" element = {<AnswerPage />} />
           <Route path = "/learning-resources" element = {<LearningResources />} />
+          <Route path = "/unanswered-posts" element = {<UnansweredQuestions />} />
+          <Route path = "/most-answered-posts" element = {<MostAnswered />} />
           
           <Route path = "/profile/:profileId" element = {<UserProfile />}></Route>
           <Route path ="/create-account"  element = {<CreateAccount />} />
