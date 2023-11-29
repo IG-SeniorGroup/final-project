@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { auth, firestore } from './firebase';
@@ -58,10 +58,18 @@ export default function AnswerQuestion() {
             const docRef = doc(firestore, "posts", params.postingId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setPosting(docSnap.data());
-                setSubject(docSnap.data().subject);
-                setLoading(false);
-            }
+              const postData = docSnap.data();
+              setPosting(postData);
+              setSubject(postData.subject);
+              setLoading(false);
+      
+              // Fetch associated answers and count their quantity
+              const answersSnapshot = await getDocs(
+                  query(collection(firestore, 'answers'), where('postingId', '==', params.postingId))
+              );
+              const answerCount = answersSnapshot.size;
+              postData.answerCount = answerCount; // Store the answer count in postData
+          }
         }
         fetchPosting();
     }, [params.postingId]);
@@ -156,7 +164,7 @@ export default function AnswerQuestion() {
                         Question:
                     </p>
                     {loading ? (
-                        <p><Spinner /></p>
+                        <div><Spinner /></div>
                     ) : (
                         <p> {posting?.question}</p>
                     )}
@@ -206,4 +214,5 @@ export default function AnswerQuestion() {
         </form>
         
     )
-}
+
+            }
