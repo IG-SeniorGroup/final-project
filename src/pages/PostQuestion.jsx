@@ -65,6 +65,11 @@ export default function PostQuestion() {
   async function handlePosting(e) {
     e.preventDefault();
     try {
+      if (!subject) {
+        // Subject not selected, display an error message or alert
+        alert('Please select a subject before posting your question.');
+        return;
+      }
       setUploading(true);
   
       let imageUrls = [];
