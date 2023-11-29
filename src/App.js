@@ -20,6 +20,7 @@ import AboutPage from "./pages/AboutPage";
 import UserProfile from "./components/UserProfile";
 import LearningResources from "./pages/LearningResources";
 import Subject from "./pages/Subjects";
+import Homepage from "./pages/Homepage";
 function App() {
   return (
     <div className="App">
@@ -56,6 +57,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path ="/explore"  element = {<ExplorePage />} />
           <Route path = "/subjects/:subjectName" element = {<Subject />}/>
+          <Route path = "/Homepage" element = {<Homepage />} />
         </Routes>
         <Footer />
 
