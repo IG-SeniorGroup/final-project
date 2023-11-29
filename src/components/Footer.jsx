@@ -18,6 +18,7 @@ export default function Footer() {
             <Link to = "/" className='underline border-r-2 border-slate-400 pr-3 text-white'>Home</Link>
             <Link to = "/explore" className='underline border-r-2 border-slate-400 pr-3 text-white'>Explore</Link>
             <Link to="/about" className='underline text-white'>About BrainLink</Link>
+            <Link to="/homepage" className='underline text-white'>Test homepage</Link>
         </div>
 
     </div>
