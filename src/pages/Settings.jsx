@@ -82,9 +82,9 @@ export default function Settings() {
           [e.target.id]: e.target.value,
         }))
       }
-      const handleFormSubmit = (e) => {
+      const handleFormSubmit = async  (e) => {
         e.preventDefault();
-        updateUserInformation(); // Call the function to update user information in Firestore
+       await updateUserInformation(); // Call the function to update user information in Firestore
       };
   return (
     <div className="w-full">
