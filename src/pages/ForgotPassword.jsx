@@ -39,7 +39,7 @@ const ForgotPassword = () => {
   }, []);
 
   return (
-    <div>
+    <div >
       <section>
         <h1 className="text-center p-4 text-4xl font-bold">Forgot Password</h1>
         <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">

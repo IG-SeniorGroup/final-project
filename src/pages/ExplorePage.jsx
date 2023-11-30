@@ -112,7 +112,7 @@ const ExplorePage = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-6xl mx-auto">
       <div className="max-w-6xl mx-auto ">
       <h1 className='mt-5 font-bold text-lg ml-4'>Categories</h1>
             <section>
@@ -385,6 +385,16 @@ const ExplorePage = () => {
                 Unanswered Questions
                     
                 </h1>
+                {unansweredPosts.length>5 && (
+                    <div className="">
+                      <p
+                        onClick={handleShowMoreUnanswered}
+                        className="text-blue-600 hover:text-blue-700 transition ease-in-out duration-150 cursor-pointer"
+                      >
+                        Show More Unanswered
+                      </p>
+                    </div>
+                  )}
                   <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4">
                     {unansweredPosts.slice(0, 4).map((posting) => (
                       <QuestionCard
@@ -394,16 +404,7 @@ const ExplorePage = () => {
                       />
                     ))}
                   </ul>
-                  {unansweredPosts.length>5 && (
-                    <div className="mt-4">
-                      <button
-                        onClick={handleShowMoreUnanswered}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Show More Unanswered
-                      </button>
-                    </div>
-                  )}
+                  
                 </div>
               )}
 
@@ -413,6 +414,16 @@ const ExplorePage = () => {
                     More Posts
                     
                 </h1>
+                {otherPosts.length > 5 && (
+                    <div className="">
+                      <button
+                        onClick={handleShowMoreOther}
+                        className="text-blue-600 hover:text-blue-700 transition ease-in-out duration-150 cursor-pointer"
+                      >
+                        Show All Posts
+                      </button>
+                    </div>
+                  )}
                   <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4">
                     {otherPosts.slice(0, 4).map((posting) => (
                       <QuestionCard
@@ -422,16 +433,7 @@ const ExplorePage = () => {
                       />
                     ))}
                   </ul>
-                  {otherPosts.length > 5 && (
-                    <div className="mt-4">
-                      <button
-                        onClick={handleShowMoreOther}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Show All Posts
-                      </button>
-                    </div>
-                  )}
+                  
                 </div>
               )}
             </>

@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path = "/" element = {<Home />}/>
+          <Route path = "/" element = {<Homepage />}/>
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
           <Route path = "/answer/:postingId" element = {<AnswerPage />} />
           <Route path = "/learning-resources" element = {<LearningResources />} />

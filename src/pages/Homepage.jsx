@@ -2,12 +2,14 @@ import React, { useRef } from 'react';
 import { Parallax, ParallaxLayer} from '@react-spring/parallax'
 
 import { FcBiotech } from 'react-icons/fc';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Homepage() {
     const ref = useRef();
+    const navigate = useNavigate();
   return (
     <div>
-        <Parallax pages = {2} className='bg-[#014D4E]'>
+        <Parallax pages = {2} ref = {ref} className='bg-[#749afb]'>
             <ParallaxLayer
             offset = {0}
             speed = {1}
@@ -28,18 +30,16 @@ export default function Homepage() {
                     <h1 className='text-5xl font-bold shine-effect'>BrailLink</h1>
                     <h2 className='max-w-2xl mx-auto p-5 text-2xl text-slate-300' >Tailor your learning experience. With BrainLink, you're in control. Explore questions, discover new perspectives, and learn at your own pace.</h2>
                     <div className='flex space-x-3'>
-                        <div>
-                            <button className="flex items-center justify-start px-2 m-2 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out  hover:border-5 shadow-md  w-[175px]">
-                                <div className="border m-1 bg-slate-200  rounded-full">
-                                    <FcBiotech className="text-2xl bg-slate-200 m-3 text-red-300" />
-                                </div>
-            
-                                <div>
-                                    <p className="font-semibold text-start text-sm">Biology</p>
-                                    
-                                </div>
-                            </button>
-                        </div>
+                    <div>
+                <Link to="/explore" className="flex items-center justify-start px-2 m-2 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-5 shadow-md w-[175px]">
+                  <div className="border m-1 bg-slate-200 rounded-full">
+                    <FcBiotech className="text-2xl bg-slate-200 m-3 text-red-300" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-start text-sm">Biology</p>
+                  </div>
+                </Link>
+              </div>
                     </div>
 
                 </div>
