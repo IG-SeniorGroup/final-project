@@ -8,7 +8,7 @@ import { FaGears, FaComputer } from "react-icons/fa6";
 import { FaAtom, FaRobot } from "react-icons/fa";
 import { HiBeaker } from "react-icons/hi";
 import { GiMedicines, GiChemicalDrop } from "react-icons/gi";
-import { FcLandscape, FcBiotech, FcCalculator } from "react-icons/fc";
+import { FcLandscape, FcBiotech, FcCalculator, FcBinoculars, FcAlphabeticalSortingAz } from "react-icons/fc";
 import { MdElectricBolt } from "react-icons/md";
 import { AiTwotoneFire } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -111,11 +111,35 @@ const ExplorePage = () => {
     navigate("/most-answered-posts");
   };
 
+  const [sliderInstance, setSliderInstance] = useState(null);
+
+  useEffect(() => {
+    if (sliderInstance && sliderInstance.splide) {
+      const splideAPI = sliderInstance.splide;
+  
+      // Play/pause button functionality
+      const playPauseButton = document.querySelector('.splide__toggle');
+      
+      if (playPauseButton) {
+        playPauseButton.addEventListener('click', () => {
+          splideAPI.toggle();
+        });
+  
+        // Update the progress bar on slide change
+        splideAPI.on('move', () => {
+          const progressBar = document.querySelector('.splide__progress__bar');
+          const progress = (splideAPI.index / (splideAPI.length - 1)) * 100;
+          progressBar.style.width = `${progress}%`;
+        });
+      }
+    }
+  }, [sliderInstance]);
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="max-w-6xl mx-auto ">
       <h1 className='mt-5 font-bold text-lg ml-4'>Categories</h1>
-            <section>
+            <section className="p-4 m-2 splide ">
             <Splide options={{
                     
                     
@@ -134,11 +158,41 @@ const ExplorePage = () => {
                     updateOnMove : true,
                     pagination: true,
                     arrows: false,
+                    autoplay: true,
+                    interval: 5000,
+                    rewind: true,
+                    speed: 1000,
                 
-            }}>
+            }}
+            onMounted={(splide) => setSliderInstance(splide)}
+            >
+             
+  
+   
                 
     
                 {/* <div className='grid-rows-2 sm:grid md:grid-cols-4 lg:grid-cols-6 '> */}
+                
+                
+                <SplideSlide>
+    
+                    <Link to={"/more-posts"}  className="category-link">
+                        <div className='flex space-x-3'>
+                            <div>
+                                <button className="flex items-center justify-start px-2 m-2 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out  hover:border-5 shadow-md w-[175px]">
+                                <div className="border m-1 bg-slate-200  rounded-full">
+                                    <FcAlphabeticalSortingAz  className="text-2xl bg-slate-200 m-3 text-slate-400" />
+                                </div>
+    
+                                <div>
+                                    <p className="font-semibold text-start text-sm">All posts</p>
+                                    
+                                </div>
+                                </button>
+                            </div>
+                        </div>
+                    </Link>
+                </SplideSlide>
                 <SplideSlide>
     
                     <Link to={"/subjects/Computer Science"}  className="category-link">
@@ -350,6 +404,13 @@ const ExplorePage = () => {
                     </SplideSlide>
                 {/* </div> */}
                 </Splide>
+                <button className="splide__toggle" type="button">
+          <span className="splide__toggle__play">Play</span>
+          <span className="splide__toggle__pause">Pause</span>
+        </button>
+        <div className="splide__progress">
+          <div className="splide__progress__bar"></div>
+        </div>
             </section>
         </div>
       

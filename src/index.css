@@ -91,3 +91,7 @@ h6 {
     background-position: 1100px;
   }
 }
+.splide__progress__bar {
+  height: 3px;
+  background: #f47272;
+}
