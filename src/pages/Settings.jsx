@@ -62,19 +62,16 @@ export default function Settings() {
       profileImage: formData.profileImage || '',
     };
   
-    // Check if all required fields are defined
-    if (Object.values(userData).every((field) => field !== undefined && field !== null)) {
-      try {
-        await setDoc(userDocRef, userData, { merge: true });
-        console.log('User information updated successfully.');
-        setSuccess('User information updated successfully.');
-      } catch (error) {
-        console.error('Error updating user information:', error);
-        setError('Error updating user information.');
-      }
-    } else {
-      console.error('Invalid data for updating user information:', userData);
-      setError('Invalid data for updating user information.');
+    // Remove undefined or null values from userData
+    const filteredUserData = Object.fromEntries(Object.entries(userData).filter(([_, v]) => v !== undefined && v !== null));
+  
+    try {
+      await setDoc(userDocRef, filteredUserData, { merge: true });
+      console.log('User information updated successfully.');
+      setSuccess('User information updated successfully.');
+    } catch (error) {
+      console.error('Error updating user information:', error);
+      setError('Error updating user information.');
     }
   };
   
