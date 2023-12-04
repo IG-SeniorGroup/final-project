@@ -1,31 +1,29 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import {BsFillBookmarkFill} from "react-icons/bs"
-import {RiAccountCircleFill} from "react-icons/ri"
-import {AiFillQuestionCircle} from "react-icons/ai"
-import { firestore, collection, doc, setDoc } from './firebase';
+import { BsFillBookmarkFill } from "react-icons/bs"
+import { RiAccountCircleFill } from "react-icons/ri"
+import { AiFillQuestionCircle } from "react-icons/ai"
+import { firestore, collection, doc, setDoc, storage } from './firebase';
 import { getAuth } from 'firebase/auth';
-import { getDoc} from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore';
+import {  ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
 
 
 export default function Settings() {
-    
-    const auth = getAuth()
-    
+
+
+  const auth = getAuth()
+
   useEffect(() => {
-    //load the user data from firestore users collection
-    //if the user is logged in
     if (auth.currentUser) {
-      //get the user document from firestore
-        const userDocRef = doc(firestore, 'users', auth.currentUser.uid);   
-        getDoc(userDocRef)
+      const userDocRef = doc(firestore, 'users', auth.currentUser.uid);
+      getDoc(userDocRef)
         .then((doc) => {
           if (doc.exists()) {
-            //set the user data in the state
             setFormData(doc.data());
             console.log("Document data:", doc.data());
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
           }
         })
@@ -36,56 +34,96 @@ export default function Settings() {
     }
   }, []);
 
-  
-  
-  const navigate = useNavigate()
-    const [change, setChange] = useState(false)
-    const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(null)
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        description: "",
-        gitHub: "",
-        linkedin: "",
-    })
-    const {firstName, lastName, email, description, gitHub, linkedin} = formData;
 
-    const updateUserInformation = async () => {
-        const userDocRef = doc(collection(firestore, 'users'), auth.currentUser.uid);
-        const userData = {
-          firstName,
-          lastName,
-          email,
-          description,
-          gitHub,
-          linkedin,
-        };
-    
-        try {
-          await setDoc(userDocRef, userData, { merge: true });
-          console.log('User information updated successfully.');
-          setSuccess('User information updated successfully.');
-        } catch (error) {
-          console.error('Error updating user information:', error);
-            setError('Error updating user information.');   
-        }
-      };
-      function onLogout(){
-        auth.signOut()
-        navigate("/")
+
+  const navigate = useNavigate()
+  const [change, setChange] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    description: "",
+    gitHub: "",
+    linkedin: "",
+  })
+  const { firstName, lastName, email, description, gitHub, linkedin } = formData;
+
+  const updateUserInformation = async () => {
+    const userDocRef = doc(collection(firestore, 'users'), auth.currentUser.uid);
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      description,
+      gitHub,
+      linkedin,
+      profileImage: formData.profileImage || '',
+    };
+  
+    // Check if all required fields are defined
+    if (Object.values(userData).every((field) => field !== undefined && field !== null)) {
+      try {
+        await setDoc(userDocRef, userData, { merge: true });
+        console.log('User information updated successfully.');
+        setSuccess('User information updated successfully.');
+      } catch (error) {
+        console.error('Error updating user information:', error);
+        setError('Error updating user information.');
       }
-    function onChange(e){
-        setFormData((prevState) => ({
-          ...prevState,
-          [e.target.id]: e.target.value,
-        }))
-      }
-      const handleFormSubmit = async  (e) => {
-        e.preventDefault();
-       await updateUserInformation(); // Call the function to update user information in Firestore
-      };
+    } else {
+      console.error('Invalid data for updating user information:', userData);
+      setError('Invalid data for updating user information.');
+    }
+  };
+  
+  const handleImageUpload = async (e) => {
+    const imageFile = e.target.files[0]; // Get the selected image file
+  
+    // Reference to Firebase Storage
+    const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}/${imageFile.name}`);
+  
+    try {
+      // Upload image to Firebase Storage
+      const snapshot = await uploadBytesResumable(storageRef, imageFile);
+  
+      // Get the image URL after successful upload
+      const imageUrl = await getDownloadURL(snapshot.ref);
+  
+      // Update user data with the image URL
+      setFormData((prevState) => ({
+        ...prevState,
+        profileImage: imageUrl, // Add 'profileImage' to your user data structure
+      }));
+  
+      // Update user document in Firestore with the image URL
+      const userDocRef = doc(collection(firestore, 'users'), auth.currentUser.uid);
+      await setDoc(userDocRef, { profileImage: imageUrl }, { merge: true });
+  
+      console.log('Image uploaded successfully:', imageUrl);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+  
+
+
+  function onLogout() {
+    auth.signOut()
+    navigate("/")
+  }
+  function onChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }))
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    await updateUserInformation(); // Call the function to update user information in Firestore
+  };
   return (
     <div className="w-full">
       <form onSubmit={handleFormSubmit}></form>
@@ -96,8 +134,8 @@ export default function Settings() {
           <p className="text-center mb-4 font-semibold text-xl">
             Personal information
           </p>
-            <p className="text-center text-red-600">{error}</p>
-            <p className="text-center text-green-600">{success}</p>
+          <p className="text-center text-red-600">{error}</p>
+          <p className="text-center text-green-600">{success}</p>
           <form>
             <p className="font-semibold">First name</p>
             <input
@@ -128,6 +166,14 @@ export default function Settings() {
               disabled={!change}
               className="mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out"
             />
+            <input
+              type="file"
+              onChange={handleImageUpload}
+              accept="image/*"
+              disabled={!change}
+              className="mb-4"
+            />
+
 
             <p className="font-semibold">Description</p>
             <textarea
@@ -200,7 +246,7 @@ export default function Settings() {
               </div>
             </button>
           </Link>
-          <Link to = {`/profile/${auth.currentUser.uid}`} >
+          <Link to={`/profile/${auth.currentUser.uid}`} >
             <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <RiAccountCircleFill className="text-3xl bg-slate-200 m-3" />

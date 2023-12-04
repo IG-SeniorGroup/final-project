@@ -53,7 +53,7 @@ export default function Homepage() {
 
             <ParallaxLayer offset={0} speed={0.5}  >
                 <div className='h-screen flex flex-col items-center justify-center'>
-                    <h1 className='text-5xl font-bold shine-effect'>BrailLink</h1>
+                    <h1 className='text-5xl font-bold shine-effect'>BrainLink</h1>
                     <h2 className='max-w-2xl mx-auto p-5 text-2xl text-slate-300' >Tailor your learning experience. With BrainLink, you're in control. Explore questions, discover new perspectives, and learn at your own pace.</h2>
                     <div className='flex space-x-3 '>
                         <div>

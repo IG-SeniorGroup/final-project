@@ -34,62 +34,50 @@ const ExplorePage = () => {
       try {
         setLoading(true);
   
-        const postingsRef = collection(firestore, "posts");
+        const postingsRef = collection(firestore, 'posts');
         const questionsSnapshot = await getDocs(postingsRef);
   
-        const unansweredPromises = [];
-        const other = [];
-        const unanswered = [];
-  
-        questionsSnapshot.forEach((doc) => {
+        const fetchUnanswered = questionsSnapshot.docs.map(async (doc) => {
           const postData = doc.data();
-          other.push({ id: doc.id, data: postData });
   
           if (!postData.answered) {
-            unanswered.push({ id: doc.id, data: postData });
-            unansweredPromises.push(
-              getDocs(query(collection(firestore, 'answers'), where('postingId', '==', doc.id))))
+            const answersQuery = query(collection(firestore, 'answers'), where('postingId', '==', doc.id));
+            const answersSnapshot = await getDocs(answersQuery);
+            return { id: doc.id, data: postData, answers: answersSnapshot };
           }
+          return null;
         });
   
-        setOtherPosts(other);
-        setLoading(false);
+        const fetchMostAnswered = questionsSnapshot.docs.map(async (doc) => {
+          const postData = doc.data();
+          const answersSnapshot = await getDocs(query(collection(firestore, 'answers'), where('postingId', '==', doc.id)));
+          const answerCount = answersSnapshot.size;
   
-        if (unanswered.length > 4) {
+          if (answerCount > 0) {
+            return { id: doc.id, data: postData, answerCount };
+          }
+          return null;
+        });
+  
+        const [unansweredResults, mostAnsweredResults] = await Promise.all([
+          Promise.all(fetchUnanswered),
+          Promise.all(fetchMostAnswered),
+        ]);
+  
+        const otherPosts = questionsSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+        setLoading(false);
+        setOtherPosts(otherPosts);
+        setUnansweredPosts(unansweredResults.filter(Boolean));
+  
+        const sortedMostAnswered = mostAnsweredResults.filter(Boolean).sort((a, b) => b.answerCount - a.answerCount);
+        setMostAnsweredQuestions(sortedMostAnswered);
+  
+        if (unansweredResults.length > 4) {
           setShowMoreUnanswered(true);
         }
-        if (other.length === 4) {
+        if (otherPosts.length === 4) {
           setShowMoreOther(true);
         }
-
-
-        setUnansweredPosts(unanswered);
-        async function fetchMostAnsweredQuestions() {
-          try {
-            const questionsSnapshot = await getDocs(collection(firestore, 'posts'));
-            const questionsData = [];
-    
-            for (const doc of questionsSnapshot.docs) {
-              const postData = doc.data();
-    
-              const answersSnapshot = await getDocs(
-                query(collection(firestore, 'answers'), where('postingId', '==', doc.id))
-              );
-    
-              const answerCount = answersSnapshot.size;
-              if (answerCount > 0) { // Only include questions with answers
-                questionsData.push({ id: doc.id, data: postData, answerCount });
-              }
-            }
-    
-            const sortedQuestions = questionsData.sort((a, b) => b.answerCount - a.answerCount);
-            setMostAnsweredQuestions(sortedQuestions);
-          } catch (error) {
-            console.error('Error fetching most answered questions:', error);
-          }
-        }
-    
-        fetchMostAnsweredQuestions(); 
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -97,6 +85,7 @@ const ExplorePage = () => {
   
     fetchData();
   }, []);
+  
   const handleShowMoreOther = () => {
     setShowMoreOther(false);
     navigate("/more-posts");
@@ -105,10 +94,6 @@ const ExplorePage = () => {
   const handleShowMoreUnanswered = () => {
     setShowMoreUnanswered(false);
     navigate("/unanswered-posts");
-  };
-  const handlemostAnsweredQuestions = () => {
-    setShowMoreUnanswered(false);
-    navigate("/most-answered-posts");
   };
 
   const [sliderInstance, setSliderInstance] = useState(null);
