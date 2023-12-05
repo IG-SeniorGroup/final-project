@@ -10,6 +10,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
+  
+
   useEffect(() => {
     async function fetchUserPostings() {
       setLoading(true);

@@ -7,6 +7,8 @@ import { firestore, collection, doc, setDoc, storage } from './firebase';
 import { getAuth } from 'firebase/auth';
 import { getDoc } from 'firebase/firestore';
 import {  ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import Profilepic from '../assets/profilepic.png';
+import { FaExchangeAlt } from "react-icons/fa";
 
 
 
@@ -134,6 +136,37 @@ export default function Settings() {
           <p className="text-center text-red-600">{error}</p>
           <p className="text-center text-green-600">{success}</p>
           <form>
+            <div className='flex items-center justify-center'>
+              <img
+              src={formData.profileImage || Profilepic}
+              alt="Profile"
+              className="w-[100px] rounded-lg"
+            />
+            <label htmlFor="imageUpload" className=" text-center cursor-pointer bg-[#9db7f8] px-2 p-2 border-2 rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-5 shadow-lg w-[125px]">
+                  Change
+                </label>
+            
+              {/* <button htmlFor="imageUpload" className='flex items-center justify-start bg-[#9db7f8] px-2 m-2 border-2 rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-5 shadow-lg w-[125px]'>
+                <div className=" m-1 bg-slate-300 rounded-full">
+                  <FaExchangeAlt className="text-lg  m-3 text-blue-400" />
+                </div>
+                <label htmlFor="imageUpload" className="cursor-pointer text-slate-700 mt-2">
+                  Change
+                </label>
+              </button> */}
+              
+            
+            
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+              disabled={!change}
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+            </div>
+          
             <p className="font-semibold">First name</p>
             <input
               type="text"
@@ -163,13 +196,13 @@ export default function Settings() {
               disabled={!change}
               className="mb-4 w-full px-4 py-2 text-xl text-gray-600 bg-white border border-slate-200 rounded-md transition ease-in-out"
             />
-            <input
+            {/* <input
               type="file"
               onChange={handleImageUpload}
               accept="image/*"
               disabled={!change}
               className="mb-4"
-            />
+            /> */}
 
 
             <p className="font-semibold">Description</p>
@@ -232,7 +265,7 @@ export default function Settings() {
       <div className="flex items-center justify-center">
         <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3">
           <Link to="/saved-questions">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
+            <button className="w-[250px] flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-xl">
                 <BsFillBookmarkFill className="text-2xl bg-slate-200 m-3" />
               </div>
@@ -244,7 +277,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to={`/profile/${auth.currentUser.uid}`} >
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
+            <button className="w-[250px] flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <RiAccountCircleFill className="text-3xl bg-slate-200 m-3" />
               </div>
@@ -256,7 +289,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to="/post-question">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
+            <button className="w-[250px] flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
               </div>
@@ -268,7 +301,7 @@ export default function Settings() {
             </button>
           </Link>
           <Link to="/my-questions">
-            <button className="flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
+            <button className="w-[250px] flex items-center justify-start p-2 m-4 border rounded-xl hover:bg-blue-200 transition duration-200 ease-in-out hover:border-blue-500 hover:border-5 shadow-md">
               <div className="border m-3 bg-slate-200 rounded-3xl">
                 <AiFillQuestionCircle className="text-3xl bg-slate-200 m-3" />
               </div>
