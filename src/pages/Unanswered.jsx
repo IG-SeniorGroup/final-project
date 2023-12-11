@@ -55,7 +55,7 @@ export default function UnansweredQuestions() {
           {unansweredQuestions.length > 0 && (
             <div className="mt-8">
               <h2 className="font-bold text-2xl mb-4">Unanswered Questions</h2>
-              <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4">
+              <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 {unansweredQuestions.map((posting) => (
                   <QuestionCard
                     key={posting.id}

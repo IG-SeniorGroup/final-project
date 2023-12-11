@@ -23,11 +23,13 @@ import UnansweredQuestions from "./pages/Unanswered";
 import MostAnswered from "./pages/MostAnswered";
 import Subject from "./pages/Subjects";
 import Homepage from "./pages/Homepage";
+import BackgroundView from "./components/BackgroundVeiw";
 function App() {
   return (
-    <div className="App">
+    <div className="">
       <Router>
         <Navbar />
+        <BackgroundView>
         <Routes>
           <Route path = "/" element = {<Homepage />}/>
           <Route path ="/category/:categoryName/:postingId"  element = {<Question />} />
@@ -63,6 +65,8 @@ function App() {
           <Route path = "/subjects/:subjectName" element = {<Subject />}/>
           <Route path = "/Homepage" element = {<Homepage />} />
         </Routes>
+       
+        </BackgroundView>
         <Footer />
 
       </Router>

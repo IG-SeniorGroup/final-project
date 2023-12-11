@@ -29,7 +29,7 @@ export default function UserProfile() {
 
     return (
         <div className='flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto'>
-            <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
+    <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
 
                 {loading ? (
                     <p><Spinner /></p>
@@ -82,12 +82,12 @@ export default function UserProfile() {
                 )}
             </div>
             <div className='md:w-[67%] lg:w-[50%] mb-12'>
-                <img
-                    src={profile?.profileImage || Profilepic}
-                    alt="Profile"
-                    className='w-full rounded-lg'
-                />
-            </div>
+        <img
+            src={profile?.profileImage || Profilepic}
+            alt="Profile"
+            className='w-1/2 rounded-lg shadow-lg' // Adjust the width here
+            />
+    </div>
 
         </div>
     );

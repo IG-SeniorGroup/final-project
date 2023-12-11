@@ -136,9 +136,9 @@ export default function PostQuestion() {
                 <option value="Environmental Science">Environmental Science</option>
                 <option value="Biomedical Science">Biomedical Science</option>
                 <option value="Chemical Engineering">Chemical Engineering</option>
-                <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
-                <option value="Mechanical Engineering">Mechanical Engineering</option>      
-                         
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Electronics Engineering">Electronics Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
               </select>
             </div>
             <div>

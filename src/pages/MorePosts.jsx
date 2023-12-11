@@ -129,7 +129,7 @@ export default function MorePosts() {
           <>
             {postings.length > 0 ? (
               <>
-                <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4  ">
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   {postings.map((posting) => (
                     <QuestionCard
                       key={posting.id}

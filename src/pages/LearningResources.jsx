@@ -36,30 +36,30 @@ export default function LearningResources() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mt-8 mb-4">Learning Resources</h1>
+    <div className="max-w-6xl mx-auto min-h-screen">
+      <h1 className="text-4xl text-[#3F3F3F] font-bold mt-8 mb-4 text-center ">Learning Resources</h1>
       {loading ? (
         <Spinner />
       ) : (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {resources.map((resource) => (
-            <div key={resource.id} className="bg-gray-100 p-4 rounded-lg">
-              <h2 className="text-xl font-semibold mb-2">
-                {resource.data.title}
-              </h2>
-              <p className="text-gray-600 mb-4">
-                {truncateDescription(resource.data.description, 25)}
-              </p>
-              <a
-                href={resource.data.link}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                Read More
-              </a>
-            </div>
-          ))}
+{resources.map((resource) => (
+  <div key={resource.id} className="bg-[#E1DFFD] bg-opacity-60 rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+    <div className="p-6">
+      <h2 className="text-2xl font-semibold text-[#3F3F3F] mb-2">{resource.data.title}</h2>
+      <p className="text-[#3F3F3F] mb-4">{truncateDescription(resource.data.description, 25)}</p>
+      <a
+  href={resource.data.link}
+  target="_blank"
+  rel="noreferrer"
+  className="bg-blue-500 hover:bg-blue-600 text-[#f0f0f0] font-bold py-2 px-4 rounded inline-block transition duration-300 ease-in-out"
+>
+  Read More
+</a>
+    </div>
+  </div>
+))}
+
+
         </div>
       )}
     </div>

@@ -53,7 +53,7 @@ export default function Login() {
   return (
     <div>
       <section>
-        <h1 className="text-center p-4 text-4xl font-bold">Login</h1>
+        <h1 className="text-center p-4 text-5xl font-bold">Login</h1>
         <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
           <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
             <img src='https://images.unsplash.com/photo-1616400619175-5beda3a17896?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80' alt="key" className='w-full rounded-2xl'/>
@@ -61,18 +61,18 @@ export default function Login() {
           <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
             <form onSubmit={handleSignIn}>
               <div>
-                <p>Email</p>
+                <p className='font-semibold'>Email</p>
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={onChange}
                   placeholder="name@gmail.com"
-                  className="w-full px-4 py-2 text-xl border border-gray-300 rounded"
+                  className="w-full px-4 py-2  text-xl border border-gray-300 rounded placeholder-opacity-50"
                 />
               </div>
               <div className="mt-5">
-                <p className="text-start">Password</p>
+                <p className="text-start font-semibold">Password</p>
                 <div className="relative mb-6">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -80,7 +80,7 @@ export default function Login() {
                     value={password}
                     onChange={onChange}
                     placeholder="Password"
-                    className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out"
+                    className="w-full px-4 py-2 text-xl text-gray-700 placeholder-opacity-50 bg-white border border-gray-300 rounded transition ease-in-out"
                   />
                   {showPassword ? (
                     <AiFillEyeInvisible

@@ -283,7 +283,7 @@ export default function Question() {
 
   return (
     <div className="gray-backg">
-      <div className="p-4 max-w-4xl lg:mx-auto rounded-lg shadow-lg bg-[#F9F9F9] lg:space-x-5">
+      <div className="p-4 max-w-4xl lg:mx-auto rounded-lg shadow-lg bg-gray-100 lg:space-x-5">
         <div className="w-full">
           <Swiper
             slidesPerView={1}

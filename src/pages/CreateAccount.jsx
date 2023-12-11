@@ -55,7 +55,7 @@ export default function CreateAccount() {
     <div>
       <div className="">
         <section className="">
-          <h5 className="text-4xl p-4 text-center font-bold">Create Account</h5>
+          <h5 className="text-5xl p-4 text-center font-bold">Create Account</h5>
 
           <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
             {/* The left side of the code and image uploaded */}
@@ -75,7 +75,7 @@ export default function CreateAccount() {
 
                 <div className="flex space-x-2">
                   <div className="text-start w-full">
-                    <p>First name</p>
+                    <p className="font-semibold">First name</p>
                     <input
                       type="text"
                       id="firstName"
@@ -86,7 +86,7 @@ export default function CreateAccount() {
                     />
                   </div>
                   <div className="text-start w-full">
-                    <p>Last name</p>
+                    <p className="font-semibold">Last name</p>
                     <input
                       type="text"
                       id="lastName"
@@ -100,7 +100,7 @@ export default function CreateAccount() {
                 {/* Email textbox */}
 
                 <div>
-                  <p className="text-start">Email</p>
+                  <p className="text-start font-semibold">Email</p>
                   <input
                     type="text"
                     id="email"
@@ -112,7 +112,7 @@ export default function CreateAccount() {
                 </div>
                 {/* password textbox */}
 
-                <p className="text-start">Password</p>
+                <p className="text-start font-semibold">Password</p>
                 <div className="relative mb-6">
                   <input
                     type={showPassword ? "text" : "password"}

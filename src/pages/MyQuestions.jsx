@@ -28,12 +28,12 @@ export default function MyQuestions() {
     },[])
   return (
     
-    <div className=' max-w-6xl px-3 mt-6 mx-auto justify-center'>
+    <div className=' max-w-6xl px-3 mt-6 mx-auto justify-center min-h-screen'>
         <p className='text-center mb-9 text-3xl font-bold'>My Questions</p>
         {postings.length > 0 && (
             <>
             
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3  '>
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 {postings.map((posting) =>(
                     <QuestionCard
                     key = {posting.id}

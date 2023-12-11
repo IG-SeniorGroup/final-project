@@ -30,7 +30,7 @@ function ResourceDetails( ) {
   }, [params.id]);
 
   return (
-    <div className="max-w-3xl mx-auto mt-8">
+    <div className="max-w-3xl mx-auto mt-8 min-h-screen">
       {loading ? (
         <Spinner />
       ) : resource ? (

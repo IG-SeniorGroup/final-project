@@ -96,10 +96,10 @@ const SavedQuestions = () => {
   }, [savedQuestions]);
 
   return (
-    <div className='max-w-6xl px-3 mt-6 mx-auto'>
+    <div className='max-w-6xl px-3 mt-6 mx-auto min-h-screen'>
       <p className='text-center mb-9 text-3xl font-bold'>Saved Questions</p>
       {/* Display Saved Questions */}
-      <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3'>
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
         {postData.map((post, index) => (
           <Link to={`/posts/${post.id}`} key={post.id}>
             <QuestionCard

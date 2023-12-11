@@ -36,12 +36,12 @@ const MostAnsweredQuestions = () => {
       fetchMostAnsweredQuestions(); // Add this line to call the new function
     }, []);
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto min-h-screen">
       <div>
         {mostAnsweredQuestions.length > 0 && (
           <div className="mt-8">
             <h2 className="font-bold text-2xl mb-4">Most Answered Questions</h2>
-            <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               {mostAnsweredQuestions.map((question) => (
                 <QuestionCard
                   key={question.id}

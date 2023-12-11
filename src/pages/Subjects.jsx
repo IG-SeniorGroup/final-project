@@ -63,7 +63,7 @@ export default function Subjects() {
     
 
   return (
-    <div className='max-w-6xl mx-auto'>
+    <div className='max-w-6xl mx-auto min-h-screen'>
         <div className='mt-5'>
             <h1 className='text-center font-semibold text-xl mb-5'>
                 All {params.subjectName} postings
@@ -73,7 +73,7 @@ export default function Subjects() {
             ) :  postings && postings.length > 0 ? (
                 <>
                 <main>
-                    <ul className=' sm:grid lg:grid-cols-4 md:grid-cols-3'>
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                         {postings.map((posting) => (
                             <QuestionCard key={posting.id} id = {posting.id} posting = {posting.data} />
                         ))}
